@@ -5,77 +5,21 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
     <header>
       <%= render 'layouts/header' %>
     </header>
-    <!--ヘッダー追加-->
-    <header class="shadow-sm" style="position: fixed; width:100%; z-index:10;">
-      <nav class="navbar navbar-expand-lg navbar-dark py-3">
-        <div class="container-fluid">
-            <!--ユーザー用のヘッダー-->
-            <% if user_signed_in? %>
-              <a class="navbar" href="/">
-                <%#= image_tag ('logo.png'), size:"60x60",class:"rounded-circle logo" %>
-              </a>
-              <h5 class="m-0 pl-5" style="color:brown;">ようこそ、<%= current_user.last_name %>さん!</h5>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto">
-                  <li class="mr-2"><%= link_to "マイページ", my_page_path,class: 'nav-link scale', style: "font-size: 1.5rem; color:brown;" %></li>
-                  <li class="mr-2"><%= link_to "お肉一覧", post_images_path,class: 'nav-link scale', style: "font-size: 1.5rem; color:brown;" %></li>
-                  <li class="mr-2"><%= link_to "ログアウト", destroy_user_session_path, method: :delete,class: 'nav-link scale', style: "font-size: 1.5rem; color:brown;"  %></li>
-                </ul>
-              </div>
-
-            <!--管理人のヘッダー-->
-            <% elsif admin_signed_in? %>
-              <a class="navbar" href="/">
-                <%= image_tag ('logo.png'), size:"60x60", class:"rounded-circle logo" %>
-              </a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto">
-                  <li class="mr-2"><%= link_to "お肉一覧", admin_post_images_path, class: 'nav-link scale', style: "font-size: 1.5rem; color:brown;" %></li>
-                  <li class="mr-2"><%= link_to "会員一覧", admin_customers_path, class: 'nav-link scale', style: "font-size: 1.5rem; color:brown;" %></li>
-                  <li class="mr-2"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: 'nav-link scale',style: "font-size: 1.5rem; color:brown;" %></li>
-                </ul>
-              </div>
-
-            <!--未ログイン時のヘッダー-->
-            <% else %>
-              <a class="navbar" href="/">
-                <%#= image_tag ('logo.png'), size:"60x60", class:"rounded-circle logo" %>
-              </a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto">
-                  <!--<li class="mr-2"><%#= link_to "商品一覧", post_images_path,class: 'nav-link scale', style: "font-size: 1.5rem; color:brown;" %></li>-->
-                  <li class="mr-2"><%= link_to "新規登録", new_user_registration_path,class: 'nav-link scale', style: "font-size: 1.5rem; color:brown;" %></li>
-                  <li class="mr-2"><%= link_to "ログイン", new_user_session_path,class: 'nav-link scale', style: "font-size: 1.5rem; color:brown;" %></li>
-                </ul>
-            </div>
-            <% end %>
-
-        </div>
-      </nav>
-    </header>
-    <div class="pb-5" style="background: rgba(255,240,86,.2); padding-top:120px; min-height:100vh;">
-      <%= flash[:notice] %>
-      <%= yield %>
-    </div>
-    <footer class="text-center pt-2 pb-2" style="background:rgb(255,226,199);">
-      <small>&copy; Nagano Cake All Right Reserved</small>
+    <main>
+      <p class="notice"><%= notice %></p>
+    　<%= yield %>
+    </main>
+    <footer>
+      <%= render 'layouts/footer' %>
     </footer>
   </body>
 </html>
