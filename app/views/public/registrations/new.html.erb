@@ -1,34 +1,51 @@
-<h2>新規ユーザー登録</h2>
+<div class="container">
+  <div class="row no-gutters">
+    <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
+      <h5 class="text-dark bg-light py-4 mb-0">新規ユーザー登録</h5>
+      <div class="form-body p-4">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "public/shared/error_messages", resource: resource %>
+        <div class="mx-auto text-center">
+          <p>ユーザー名、メールアドレス<br>パスワードを入力してください。</p>
+        </div>
 
-  <div class="field">
-    <%= f.label :"ユーザー名" %><br>
-    <%= f.text_field :name, autofocus: true %>
+        <%= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f| %>
+          <%= render "public/shared/error_messages", resource: resource %>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" aria-hidden="true"><i class="fas fa-user"></i></span>
+            </div>
+            <%= f.text_field :name, autofocus: true, class:"form-control", id:"inputName", placeholder:"ユーザー名"%>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
+            </div>
+            <%= f.email_field :email, autofocus: true, class:"form-control", id:"inputEmail", placeholder:"メールアドレス" %>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" aria-hidden="true"><i class="fas fa-lock"></i></span>
+            </div>
+            <%= f.password_field :password, autocomplete: "off", class:"form-control", id:"inputPassword", placeholder:"パスワード（6文字以上）" %>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" aria-hidden="true"><i class="fas fa-check-circle"></i></span>
+            </div>
+            <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control", id:"inputConfirmPassword", placeholder:"パスワード確認" %>
+          </div>
+
+          <%= f.submit "新規登録", class:"btn btn-block btn-info mt-5" %>
+        <% end %>
+
+        <p class="mt-5">既に登録済みの方</p>
+          <%= render "public/shared/links" %>
+
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :"メールアドレス" %><br />
-    <%= f.email_field :email, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :"パスワード（6文字以上）" %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :"パスワード（確認用）" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "public/shared/links" %>
+</div>
