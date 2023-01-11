@@ -19,14 +19,13 @@ class Public::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 
-  protected
   # 退会している場合の処理
   def user_state
     # 【処理内容1】 入力されたemailからアカウントを1件取得

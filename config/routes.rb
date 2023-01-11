@@ -1,28 +1,31 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-    get 'post_images/index'
-    get 'post_images/show'
-  end
-  namespace :public do
-    get 'post_images/index'
-    get 'post_images/show'
-    get 'post_images/edit'
-  end
+# ユーザー側のルーティング
   scope module: :public do
     root to:"homes#top"
+    resources :post_images
+  end
+
+# 管理者側のルーティング
+  namespace :admin do
+    resources :post_images, only: [:index, :show, :destroy]
   end
 
 
+
+# deviseのルーティング
   # ユーザー用
-  # URL /customers/sign_in ...
   devise_for :users, skip: [:passwords], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
+  # ユーザーゲストログイン
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+    get 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+  end
 
   # 管理者用
-  # URL /admin/sign_in ...
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
   }

@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :post_images, dependent: :destroy
   has_many :post_comments, dependent: :destroy
 
-  validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: true
+  validates :name, presence: true, length: { minimum: 2, maximum: 20 }
   validates :email, presence: true, uniqueness: true
   validates :introduction, length: { maximum: 200 }
 
@@ -22,4 +22,11 @@ class User < ApplicationRecord
     profile_image.variant(resize_to_limit: [width, height]).processed
   end
 
+  # users/sessions_controller.rbで記述したUser.guestのguestメソッド
+  def self.guest
+    find_or_create_by!(name: 'guestuser' ,email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.name = "guestuser"
+    end
+  end
 end
