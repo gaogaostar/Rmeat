@@ -6,10 +6,10 @@
     <%= image_tag post_image.get_image %>
   <% end %>
 
-  <p>投稿ユーザー画像：<%= image_tag 'user_no_image.jpg' %></p>
   <p>店名：<%= post_image.shop_name %></p>
   <p>タイトル：<%= post_image.title %></p>
-  <p>説明：<%= post_image.body %></p>
   <p>ユーザーネーム：<%= post_image.user.name %></p>
+  <p>投稿ユーザー画像：<%= image_tag post_image.user.get_profile_image(100,100) %></p>
+  <p><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></p>
 </div>
 <% end %>

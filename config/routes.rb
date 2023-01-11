@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 # ユーザー側のルーティング
   scope module: :public do
     root to:"homes#top"
-    resources :post_images
+    resources :users, only: [:show, :edit, :update]
+    resources :post_images do
+      resources :post_comments, only: [:create, :destroy]
+    end
   end
 
 # 管理者側のルーティング
