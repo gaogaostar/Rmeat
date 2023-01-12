@@ -1,66 +1,69 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="/"><span>Rmeat</span></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav ml-auto">
+<header class="shadow-sm" style="background:rgb(13,13,13)">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">Rmeat</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
 
-      <!--ログイン済みユーザーのヘッダー-->
-      <% if user_signed_in? %>
-        <li>
-          <%= link_to post_images_path, class:"nav-link text-light" do %>
-            <i class="fa-solid fa-drumstick-bite"></i> お肉一覧
-          <% end %>
-        </li>
-        <li>
-          <%= link_to new_post_image_path, class:"nav-link text-light" do %>
-            <i class="fa-solid fa-drumstick-bite"></i> お肉を投稿する
-          <% end %>
-        </li>
-        <li>
-          <%= link_to destroy_user_session_path, method: :delete, class:"nav-link text-light" do %>
-            <i class="fas fa-sign-out-alt"></i> ログアウト
-          <% end %>
-        </li>
+        <!--ログイン済みユーザーのヘッダー-->
+        <% if user_signed_in? %>
+          <h5 class="m-0 pl-5" style="color:white;">ようこそ、<%= current_user.name %>さん!</h5>
+          <li>
+            <%= link_to post_images_path, class:"nav-link text-light" do %>
+              <i class="fa-solid fa-drumstick-bite"></i> お肉一覧
+            <% end %>
+          </li>
+          <li>
+            <%= link_to new_post_image_path, class:"nav-link text-light" do %>
+              <i class="fa-solid fa-drumstick-bite"></i> お肉を投稿する
+            <% end %>
+          </li>
+          <li>
+            <%= link_to destroy_user_session_path, method: :delete, class:"nav-link text-light" do %>
+              <i class="fas fa-sign-out-alt"></i> ログアウト
+            <% end %>
+          </li>
 
-      <!--ログイン済み管理人のヘッダー-->
-      <% elsif admin_signed_in? %>
-        <li>
-          <%= link_to destroy_admin_session_path, method: :delete, class:"nav-link text-light" do %>
-            <i class="fas fa-sign-out-alt"></i> ログアウト
-          <% end %>
-        </li>
+        <!--ログイン済み管理人のヘッダー-->
+        <% elsif admin_signed_in? %>
+          <li>
+            <%= link_to destroy_admin_session_path, method: :delete, class:"nav-link text-light" do %>
+              <i class="fas fa-sign-out-alt"></i> ログアウト
+            <% end %>
+          </li>
 
 
-      <!--未ログイン時のヘッダー-->
-      <% else %>
-        <li>
-          <%= link_to root_path, class:"nav-link text-light" do %>
-            <i class="fas fa-home"></i> Home
-          <% end %>
-        </li>
-        <li>
-          <%= link_to post_images_path, class:"nav-link text-light" do %>
-            <i class="fa-solid fa-drumstick-bite"></i> お肉一覧
-          <% end %>
-        </li>
-        <li>
-          <%= link_to new_user_registration_path, class:"nav-link text-light" do %>
-            <i class="fas fa-user-plus"></i> 新規ユーザー登録
-          <% end %>
-        </li>
-        <li>
-          <%= link_to new_user_session_path, class:"nav-link text-light" do %>
-            <i class="fas fa-sign-in-alt"></i> ログイン
-          <% end %>
-        </li>
-      <% end %>
+        <!--未ログイン時のヘッダー-->
+        <% else %>
+          <li>
+            <%= link_to root_path, class:"nav-link text-light" do %>
+              <i class="fas fa-home"></i> Home
+            <% end %>
+          </li>
+          <li>
+            <%= link_to post_images_path, class:"nav-link text-light" do %>
+              <i class="fa-solid fa-drumstick-bite"></i> お肉一覧
+            <% end %>
+          </li>
+          <li>
+            <%= link_to new_user_registration_path, class:"nav-link text-light" do %>
+              <i class="fas fa-user-plus"></i> 新規ユーザー登録
+            <% end %>
+          </li>
+          <li>
+            <%= link_to new_user_session_path, class:"nav-link text-light" do %>
+              <i class="fas fa-sign-in-alt"></i> ログイン
+            <% end %>
+          </li>
+        <% end %>
 
-      </ul>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
-<!--検索窓-->
-<%#= render 'searches/form' %>
+  </nav>
+  <!--検索窓-->
+  <%#= render 'searches/form' %>
+</header>
