@@ -10,8 +10,11 @@ class Public::PostImagesController < ApplicationController
   def create
     @post_image = PostImage.new(post_image_params)
     @post_image.user_id = current_user.id
+    tag_list = params[:post_image][:tag_name].split(',')
+
     if @post_image.save
-      redirect_to post_images_path
+      @post_image.save_tag(tag_list)
+      redirect_to post_images_path, notice:"投稿しました"
     else
       render :new
     end
@@ -19,11 +22,23 @@ class Public::PostImagesController < ApplicationController
 
   def index
     @post_images = PostImage.all
+    @tag_list = Tag.all
+    @post_image = current_user.post_images.new
   end
 
   def show
     @post_image = PostImage.find(params[:id])
     @post_comment = PostComment.new
+    @post_tags = @post_image.tags #クリックした投稿に紐付けられているタグの取得。
+  end
+
+  def search_tag
+    #検索結果画面でもタグ一覧表示
+    @tag_list = Tag.all
+    #検索されたタグを受け取る
+    @tag = Tag.find(params[:tag_id])
+    #検索されたタグに紐づく投稿を表示
+    @post_images = @tag.post_images.all  # .page(params[:page]).per(10)
   end
 
   def edit

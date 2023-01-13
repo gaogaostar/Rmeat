@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   }
   # ゲストログイン
   devise_scope :user do
-    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
-    get 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+    post 'users/guest_sign_in' => 'users/sessions#guest_sign_in'
+    get 'users/guest_sign_in' => 'users/sessions#guest_sign_in'
   end
 
   # 管理者用
@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   scope module: :public do
     root to:"homes#top"
     resources :users, only: [:show, :edit, :update]
+    get "search_tag" => "post_images#search_tag"
     resources :post_images do
       resources :post_comments, only: [:create, :destroy]
     end

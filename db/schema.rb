@@ -70,14 +70,17 @@ ActiveRecord::Schema.define(version: 2023_01_09_150825) do
   end
 
   create_table "post_tags", force: :cascade do |t|
-    t.integer "post_image_id", null: false
-    t.integer "tag_id", null: false
+    t.integer "post_image_id"
+    t.integer "tag_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_image_id", "tag_id"], name: "index_post_tags_on_post_image_id_and_tag_id", unique: true
+    t.index ["post_image_id"], name: "index_post_tags_on_post_image_id"
+    t.index ["tag_id"], name: "index_post_tags_on_tag_id"
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "tag_name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -99,4 +102,6 @@ ActiveRecord::Schema.define(version: 2023_01_09_150825) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "post_tags", "post_images"
+  add_foreign_key "post_tags", "tags"
 end

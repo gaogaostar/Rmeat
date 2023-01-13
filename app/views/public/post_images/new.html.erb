@@ -20,8 +20,6 @@
     <h4>お店の場所</h4>
       <%#= f.text_field :shop_location %>
 
-    <!--星評価-->
-
     <h4>価格</h4>
       <%#= f.text_field :price %>
 
@@ -30,6 +28,13 @@
 
     <h4>説明</h4>
       <%= f.text_field :body %>
+
+    <h4>５段階評価</h4>
+    <!--星評価-->
+
+    <h4>タグ</h4>
+    <%= f.text_field :tag_name %>
+
 
       <%= f.submit '投稿する' %>
   <% end %>
