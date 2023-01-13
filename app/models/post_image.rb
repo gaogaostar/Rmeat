@@ -8,6 +8,8 @@ class PostImage < ApplicationRecord
 
   validates :shop_name, presence: true
   validates :image, presence: true
+  validates :star, presence: true
+
 
   # 画像がない場合に表示する画像を用意
   def get_image

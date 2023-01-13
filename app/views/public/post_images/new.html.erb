@@ -1,12 +1,14 @@
 <h1>画像投稿フォーム</h1>
 
   <% if @post_image.errors.any? %>
-    <%= @post_image.errors.count %>件のエラーが発生しました
-    <ul>
-      <% @post_image.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
+    <div class="notification is-denger">
+      <h2><%= @post_image.errors.count %>件のエラーが発生しました</h2>
+      <ul>
+        <% @post_image.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
 
   <%= form_with model: @post_image do |f| %>
@@ -31,10 +33,28 @@
 
     <h4>５段階評価</h4>
     <!--星評価-->
+      <div class="rating-box">
+        <div class="main-rating d-flex">
+          <div class="ratings", style="cursor:pointer">
+            <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
+            <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
+            <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
+            <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
+            <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
+          </div>
+          <div class="ml-3 rating-value-display">
+            <span id="rating-value-display">0</span>/5
+          </div>
+        </div>
+        <%= f.label :star,'評価', class:'col-md-3 col-form-label' %>
+        <%= f.hidden_field :star, id: "rating-value" %>
+      </div>
 
     <h4>タグ</h4>
     <%= f.text_field :tag_name %>
 
 
-      <%= f.submit '投稿する' %>
+    <%= f.submit "投稿する" %>
   <% end %>
+
+  <%= link_to "戻る", post_images_path %>

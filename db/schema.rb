@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2023_01_09_150825) do
   create_table "post_images", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "shop_name", null: false
+    t.integer "star", null: false
     t.string "title", null: false
     t.text "body", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -92,7 +93,6 @@ ActiveRecord::Schema.define(version: 2023_01_09_150825) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "name", null: false
-    t.text "introduction"
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
