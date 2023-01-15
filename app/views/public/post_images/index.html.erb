@@ -1,16 +1,23 @@
+<!--タグリスト-->
+<% @tag_list.each do |tag_list| %>
+  <%= link_to tag_list.tag_name, search_tag_path(tag_id: tag_list.id) %>
+  <%= "(#{tag_list.post_images.count})" %>
+<% end %>
+
+
+
 <h1>Public::PostImages#index</h1>
 
-
-<!--投稿一覧画面で投稿に紐づくタグを表示-->
-<% @post_images.each do |post_image| %>
-  <i class="fas fa-tag"><%= post_image.tags.map(&:tag_name).join(', ') %></i>
-<% end %>
 
 <% @post_images.each do |post_image| %>
   <div>
     <%= link_to post_image_path(post_image.id) do %>
       <%= image_tag post_image.get_image %>
     <% end %>
+
+    <!--投稿一覧画面で投稿に紐づくタグを表示-->
+    <p><i class="fa-solid fa-tag"></i><%= post_image.tags.map(&:tag_name).join(',') %></p>
+
 
     <div class="star-rating position-relative" style="width: 5em;">
       <div class="star-rating-front position-absolute top-0 start-0 overflow-hidden" style="color:#fc0; width:<%= post_image.star_percentage %>%">★★★★★</div>
@@ -22,17 +29,11 @@
     <p>タイトル：<%= post_image.title %></p>
     <p>ユーザーネーム：<%= post_image.user.name %></p>
     <p>投稿ユーザー画像：<%= image_tag post_image.user.get_profile_image(100,100) %></p>
-    <p><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></p>
 
+    <p><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></p>
   </div>
 
-  <!--タグリスト-->
-<% @tag_list.each do |tag_list| %>
-  <%= link_to tag_list.tag_name, search_tag_path(tag_id: tag_list.id) %>
-  <%= "(#{tag_list.post_images.count})" %>
-<% end %>
 
 <% end %>
-
 
 

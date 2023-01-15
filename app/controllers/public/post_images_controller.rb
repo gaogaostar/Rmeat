@@ -21,9 +21,8 @@ class Public::PostImagesController < ApplicationController
   end
 
   def index
-    @post_images = PostImage.all
+    @post_images = PostImage.all.order(id: "DESC")
     @tag_list = Tag.all
-    @post_image = current_user.post_images.new
   end
 
   def show
