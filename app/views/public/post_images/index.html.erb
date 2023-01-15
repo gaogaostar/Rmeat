@@ -12,6 +12,12 @@
       <%= image_tag post_image.get_image %>
     <% end %>
 
+    <div class="star-rating position-relative" style="width: 5em;">
+      <div class="star-rating-front position-absolute top-0 start-0 overflow-hidden" style="color:#fc0; width:<%= post_image.star_percentage %>%">★★★★★</div>
+      <div class="star-rating-back" style="color:#ccc">★★★★★</div>
+    </div>
+    <p>評価：<%= post_image.star %></p>
+
     <p>店名：<%= post_image.shop_name %></p>
     <p>タイトル：<%= post_image.title %></p>
     <p>ユーザーネーム：<%= post_image.user.name %></p>
@@ -27,3 +33,6 @@
 <% end %>
 
 <% end %>
+
+
+

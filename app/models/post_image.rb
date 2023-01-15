@@ -40,4 +40,9 @@ class PostImage < ApplicationRecord
       self.tags << new_post_tag
     end
   end
+
+  def star_percentage
+    star.round(1).to_f*100/5
+  end
+
 end

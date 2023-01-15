@@ -32,8 +32,11 @@
       <%= f.text_field :body %>
 
     <h4>５段階評価</h4>
-    <!--星評価-->
+    星評価
       <div class="rating-box">
+        <%= f.label :star,'評価', class:'col-md-3 col-form-label' %>
+        <%= f.hidden_field :star, id: "rating-value" %>
+
         <div class="main-rating d-flex">
           <div class="ratings", style="cursor:pointer">
             <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
@@ -46,8 +49,6 @@
             <span id="rating-value-display">0</span>/5
           </div>
         </div>
-        <%= f.label :star,'評価', class:'col-md-3 col-form-label' %>
-        <%= f.hidden_field :star, id: "rating-value" %>
       </div>
 
     <h4>タグ</h4>
@@ -58,3 +59,5 @@
   <% end %>
 
   <%= link_to "戻る", post_images_path %>
+
+  <%= javascript_pack_tag "star.js" %>

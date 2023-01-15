@@ -3,6 +3,12 @@
 
 <div>
   <%= image_tag @post_image.get_image %>
+    <div class="star-rating position-relative" style="width: 5em;">
+      <div class="star-rating-front position-absolute top-0 start-0 overflow-hidden" style="color:#fc0; width:<%= @post_image.star_percentage %>%">★★★★★</div>
+      <div class="star-rating-back" style="color:#ccc">★★★★★</div>
+    </div>
+    <p>評価：<%= @post_image.star %></p>
+
   <p>ショップ名：<%= @post_image.shop_name %></p>
   <p>説明：<%= @post_image.body %></p>
   <p>投稿ユーザー画像：<%= image_tag @post_image.user.get_profile_image(100,100) %></p>
@@ -23,24 +29,27 @@
     <%= link_to "削除", post_image_path(@post_image.id), method: :delete %>
   <% end %>
 
-<div>
-  <p>コメント件数：<%= @post_image.post_comments.count %></p>
-  <% @post_image.post_comments.each do |post_comment| %>
-    <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
-    <%= post_comment.user.name %>
-    <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
-    <!--コメント削除ボタン-->
-    <% if post_comment.user == current_user %>
-      <%= link_to "削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete %>
-    <% end %>
+  <div>
+    <p>コメント件数：<%= @post_image.post_comments.count %></p>
+    <% @post_image.post_comments.each do |post_comment| %>
+      <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
+      <%= post_comment.user.name %>
+      <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+      <!--コメント削除ボタン-->
+      <% if post_comment.user == current_user %>
+        <%= link_to "削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete %>
+      <% end %>
 
-  <% end %>
-</div>
-<div>
-  <%= form_with model: [@post_image, @post_comment] do |f| %>
-    <%= f.text_area :comment, rows: '5', placeholder: "コメントを入力" %>
-    <%= f.submit "送信する" %>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+  <div>
+    <%= form_with model: [@post_image, @post_comment] do |f| %>
+      <%= f.text_area :comment, rows: '5', placeholder: "コメントを入力" %>
+      <%= f.submit "送信する" %>
+    <% end %>
+  </div>
+
+  <%= link_to "戻る", post_images_path %>
+
 
 </div>
