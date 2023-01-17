@@ -1,7 +1,7 @@
 <header class="shadow-sm" style="background:rgb(13,13,13)">
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-      <a class="navbar-brand" href="/">Rmeat</a>
+    <div class="container-fluid">
+      <a class="navbar-brand mx-5" href="/">Rmeat</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -10,7 +10,7 @@
 
         <!--ログイン済みユーザーのヘッダー-->
         <% if user_signed_in? %>
-          <h5 class="m-0 pl-5" style="color:white;">ようこそ、<%= current_user.name %>さん!</h5>
+          <h5 class="mt-2 mr-5" style="color:white;">ようこそ、<%= current_user.name %>さん！</h5>
           <li>
             <%= link_to post_images_path, class:"nav-link text-light" do %>
               <i class="fa-solid fa-drumstick-bite"></i> お肉一覧
@@ -30,19 +30,23 @@
         <!--ログイン済み管理人のヘッダー-->
         <% elsif admin_signed_in? %>
           <li>
+            <%= link_to post_images_path, class:"nav-link text-light" do %>
+              <i class="fa-solid fa-drumstick-bite"></i> ユーザー一覧
+            <% end %>
+          </li>
+          <li>
+            <%= link_to admin_post_images_path, class:"nav-link text-light" do %>
+              <i class="fa-solid fa-drumstick-bite"></i> 投稿一覧
+            <% end %>
+          </li>
+          <li>
             <%= link_to destroy_admin_session_path, method: :delete, class:"nav-link text-light" do %>
               <i class="fas fa-sign-out-alt"></i> ログアウト
             <% end %>
           </li>
 
-
         <!--未ログイン時のヘッダー-->
         <% else %>
-          <li>
-            <%= link_to root_path, class:"nav-link text-light" do %>
-              <i class="fas fa-home"></i> Home
-            <% end %>
-          </li>
           <li>
             <%= link_to post_images_path, class:"nav-link text-light" do %>
               <i class="fa-solid fa-drumstick-bite"></i> お肉一覧

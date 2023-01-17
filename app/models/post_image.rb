@@ -12,13 +12,14 @@ class PostImage < ApplicationRecord
 
 
   # 画像がない場合に表示する画像を用意
-  def get_image
+  def get_image(width, height)
     unless image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
-      image.attach(io: File.open(file_path),filename: 'default -image,jpg', content_type:'image/jpeg')
+      image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type:'image/jpeg')
     end
-    image
+    image.variant(resize_to_limit: [width, height]).processed
   end
+
 
   # タグを保存するためのメソッド
   def save_tag(sent_tags)
@@ -41,6 +42,7 @@ class PostImage < ApplicationRecord
     end
   end
 
+  # 一覧画面で★を表示するためのメソッド
   def star_percentage
     star.round(1).to_f*100/5
   end

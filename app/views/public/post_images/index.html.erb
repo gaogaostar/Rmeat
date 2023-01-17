@@ -1,39 +1,48 @@
-<!--タグリスト-->
-<% @tag_list.each do |tag_list| %>
-  <%= link_to tag_list.tag_name, search_tag_path(tag_id: tag_list.id) %>
-  <%= "(#{tag_list.post_images.count})" %>
-<% end %>
-
-
-
-<h1>Public::PostImages#index</h1>
-
-
-<% @post_images.each do |post_image| %>
-  <div>
-    <%= link_to post_image_path(post_image.id) do %>
-      <%= image_tag post_image.get_image %>
+<div class="container">
+  <div class="row">
+    <!--タグリスト-->
+    <p>タグ一覧</p>
+    <% @tag_list.each do |tag_list| %>
+      <%= link_to tag_list.tag_name, search_tag_path(tag_id: tag_list.id) %>
+      <%= "(#{tag_list.post_images.count})" %>
     <% end %>
-
-    <!--投稿一覧画面で投稿に紐づくタグを表示-->
-    <p><i class="fa-solid fa-tag"></i><%= post_image.tags.map(&:tag_name).join(',') %></p>
-
-
-    <div class="star-rating position-relative" style="width: 5em;">
-      <div class="star-rating-front position-absolute top-0 start-0 overflow-hidden" style="color:#fc0; width:<%= post_image.star_percentage %>%">★★★★★</div>
-      <div class="star-rating-back" style="color:#ccc">★★★★★</div>
-    </div>
-    <p>評価：<%= post_image.star %></p>
-
-    <p>店名：<%= post_image.shop_name %></p>
-    <p>タイトル：<%= post_image.title %></p>
-    <p>ユーザーネーム：<%= post_image.user.name %></p>
-    <p>投稿ユーザー画像：<%= image_tag post_image.user.get_profile_image(100,100) %></p>
-
-    <p><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></p>
   </div>
 
+  <div class="row">
+    <h4>お肉一覧</h4>
+  </div>
 
-<% end %>
+  <div class="row">
+    <% @post_images.each do |post_image| %>
 
+      <!--カードスタイル-->
+      <div class="card" style="width: 300px;">
+        <!--投稿画像-->
+        <div class="card-img-top" style="width:300px; height:250px;">
+          <%= link_to post_image_path(post_image.id) do %>
+            <%= image_tag post_image.get_image, style:"width: 100%; height: 100%; object-fit: cover;" %>
+          <% end %>
+        </div>
+        <!--内容説明-->
+        <div class="card-body">
+          <h5 class="card-title mb-0"><%= post_image.title %></h5>
+          <div class="card-text">
+            <div class="star-rating position-relative overflow-hidden" style="width: 5em;">
+              <div class="star-rating-front position-absolute top-0 start-0" style="color:#fc0; width:<%= post_image.star_percentage %>%">★★★★★</div>
+              <div class="star-rating-back" style="color:#ccc">★★★★★</div>
+            </div>
+            <div>店名：<%= post_image.shop_name %></div>
+            <div>投稿ユーザー：<%= post_image.user.name %></div>
+            <div><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></div>
+            <!--投稿一覧画面で投稿に紐づくタグを表示-->
+            <% unless post_image.tags.blank? %>
+              <div><i class="fa-solid fa-tag"></i><%= post_image.tags.map(&:tag_name).join(',') %></div>
+            <% end %>
+          </div>
+        </div>
+      </div>
 
+    <% end %>
+  </div>
+
+</div>

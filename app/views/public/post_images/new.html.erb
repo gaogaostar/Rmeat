@@ -22,28 +22,27 @@
     <h4>お店の場所</h4>
       <%#= f.text_field :shop_location %>
 
-    <h4>価格</h4>
+    <!--<h4>価格</h4>-->
       <%#= f.text_field :price %>
 
     <h4>投稿タイトル</h4>
       <%= f.text_field :title %>
 
     <h4>説明</h4>
-      <%= f.text_field :body %>
+      <%= f.text_area :body %>
 
     <h4>５段階評価</h4>
-    星評価
       <div class="rating-box">
         <%= f.label :star,'評価', class:'col-md-3 col-form-label' %>
         <%= f.hidden_field :star, id: "rating-value" %>
 
         <div class="main-rating d-flex">
           <div class="ratings", style="cursor:pointer">
-            <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
-            <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
-            <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
-            <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
-            <span class="fa fa-star-o" id="star", style="color:#fc0"></span>
+            <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
+            <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
+            <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
+            <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
+            <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
           </div>
           <div class="ml-3 rating-value-display">
             <span id="rating-value-display">0</span>/5
@@ -52,8 +51,30 @@
       </div>
 
     <h4>タグ</h4>
-    <%= f.text_field :tag_name %>
+      <%= f.text_field :tag_name %>
 
+
+
+
+
+        <!--<%# @list_tag.each do |tag| %>-->
+        <!--  <div>-->
+        <!--    <%#= f.check_box :tag_name,{ multiple: true, checked: @post_image.tags.present? ? @post_image.tags.split(",").include?(tag) : false } %>-->
+        <!--    <span><%#= tag.tag_name %></span>-->
+        <!--  </div>-->
+        <!--<%# end %>-->
+
+
+    <!--<div class='form-group'>-->
+    <!--  <%#= f.collection_check_boxes(:tag_ids, Tag.all, :id, :tag_name) do |tag| %>-->
+    <!--    <div class='form-check'>-->
+    <!--      <%#= tag.label class: 'form-check-label' do %>-->
+    <!--        <%#= tag.check_box class: 'form-check-input' %>-->
+    <!--        <%#= tag.text %>-->
+    <!--      <%# end %>-->
+    <!--    </div>-->
+    <!--  <%# end %>-->
+    <!--</div>-->
 
     <%= f.submit "投稿する" %>
   <% end %>

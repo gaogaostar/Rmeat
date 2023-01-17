@@ -14,7 +14,7 @@ for(let i=0; i<stars.length; i++){
   // 星にカーソルが乗ったときに実行する関数を定義
   stars[i].addEventListener("mouseover", function(){
     // stars.lengthの値（5）だけ繰り返し
-		// つまり、星カーソルが乗った時、5回繰り返される
+		// 星にカーソルが乗った時、5回繰り返される
     for(let j=0; j<stars.length; j++){
       stars[j].classList.remove("fa-star");
       stars[j].classList.add("fa-star-o");
