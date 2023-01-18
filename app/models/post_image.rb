@@ -7,19 +7,18 @@ class PostImage < ApplicationRecord
   has_many :tags, through: :post_tags, dependent: :destroy
 
   validates :shop_name, presence: true
-  validates :image, presence: true
+  # validates :image, presence: true
   validates :star, presence: true
 
 
   # 画像がない場合に表示する画像を用意
-  def get_image(width, height)
+  def get_image
     unless image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
-      image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type:'image/jpeg')
+      image.attach(io: File.open(file_path),filename: 'default -image,jpg', content_type:'image/jpeg')
     end
-    image.variant(resize_to_limit: [width, height]).processed
+    image
   end
-
 
   # タグを保存するためのメソッド
   def save_tag(sent_tags)

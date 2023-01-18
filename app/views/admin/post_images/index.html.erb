@@ -1,56 +1,52 @@
 <div class="container">
-  <div class="mt-4">
-    <div class="col-md-auto">
+  <div class="col-md-auto">
 
-      <div class="row mt-4">
-        <div class="col-3">
-          <h4><span class="bg-light">投稿一覧（管理者用）</span></h4>
-        </div>
-      </div>
+    <div class="row my-3">
+      <h4><span class="bg-light">投稿一覧（管理者用）</span></h4>
+    </div>
 
-      <div class="col-12 mt-4 mb-5">
+    <div class="row">
 
-        <table class='table'>
-          <thead class="table table-dark">
-            <tr>
-              <th>投稿日</th>
-              <th>投稿ID</th>
-              <th>投稿ユーザー</th>
-              <th>投稿画像</th>
-              <th>タイトル</th>
-              <th>店名</th>
-              <th>評価</th>
-              <th>説明</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @post_images.each do |post_image| %>
-            <tr>
-              <!--投稿日-->
-              <td class="align-middle"><p class="m-0"><%= post_image.created_at.strftime('%Y/%m/%d') %></p></td>
-              <!--投稿ID-->
-              <td class="align-middle"><p class="m-0"><%= post_image.id %></p></td>
-              <!--投稿ユーザー-->
-              <td class="align-middle"><p class="m-0"><%= post_image.user.name %></p></td>
-              <!--投稿画像-->
-              <td class="align-middle"><p class="m-0"><%= image_tag post_image.get_image(60,50) %></p></td>
-              <!--タイトル-->
-              <td class="align-middle"><p class="m-0"><%= post_image.title %></p></td>
-              <!--店名-->
-              <td class="align-middle"><p class="m-0"><%= post_image.shop_name %></p></td>
-              <!--★評価-->
-              <td class="align-middle"><p class="m-0"><%= post_image.star %></p></td>
-              <!--説明-->
-              <td class="align-middle"><p class="m-0"><%= post_image.body %></p></td>
-              <!--削除ボタン-->
-              <td class="align-middle"><p class="m-0"><%= link_to "削除する", post_image_path(post_image), method: :delete, class:"btn btn-danger" %></p></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
+      <table class='table'>
+        <thead class="table table-dark">
+          <tr>
+            <th>投稿日</th>
+            <th>投稿ID</th>
+            <th>投稿ユーザー</th>
+            <th>投稿画像</th>
+            <th>タイトル</th>
+            <th>店名</th>
+            <th>評価</th>
+            <th>説明</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @post_images.each do |post_image| %>
+          <tr>
+            <!--投稿日-->
+            <td class="align-middle"><p class="m-0"><%= post_image.created_at.strftime('%Y/%m/%d') %></p></td>
+            <!--投稿ID-->
+            <td class="align-middle"><p class="m-0"><%= post_image.id %></p></td>
+            <!--投稿ユーザー-->
+            <td class="align-middle"><p class="m-0"><%= post_image.user.name %></p></td>
+            <!--投稿画像-->
+            <td class="align-middle"><p class="m-0"><%= image_tag post_image.get_image, size:"60x50" %></p></td>
+            <!--タイトル-->
+            <td class="align-middle"><p class="m-0"><%= post_image.title %></p></td>
+            <!--店名-->
+            <td class="align-middle"><p class="m-0"><%= post_image.shop_name %></p></td>
+            <!--★評価-->
+            <td class="align-middle"><p class="m-0"><%= post_image.star %></p></td>
+            <!--説明-->
+            <td class="align-middle"><p class="m-0"><%= post_image.body %></p></td>
+            <!--削除ボタン-->
+            <td class="align-middle"><p class="m-0"><%= link_to "削除する", admin_post_image_path(post_image), method: :delete, data: {confirm:"管理者権限でこの投稿を削除しますか？"}, class:"btn btn-danger" %></p></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
 
-      </div>
     </div>
   </div>
 </div>
