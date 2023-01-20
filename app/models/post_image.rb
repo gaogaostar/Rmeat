@@ -7,7 +7,7 @@ class PostImage < ApplicationRecord
   has_many :tags, through: :post_tags, dependent: :destroy
 
   validates :shop_name, presence: true
-  # validates :image, presence: true
+  validates :image, presence: true
   validates :star, presence: true
 
 
@@ -44,6 +44,15 @@ class PostImage < ApplicationRecord
   # 一覧画面で★を表示するためのメソッド
   def star_percentage
     star.round(1).to_f*100/5
+  end
+
+  # キーワード検索用のメソッド
+  def self.search(search)
+    if search != ""
+      PostImage.where(['title LIKE(?) OR body LIKE(?) OR shop_name LIKE(?)', "%#{search}%", "%#{search}%", "%#{search}%"])
+    else
+      PostImage.includes(:user).order('created_at DESC')
+    end
   end
 
 end

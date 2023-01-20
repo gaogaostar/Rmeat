@@ -25,7 +25,7 @@
   </div>
 
   <!--投稿削除ボタン-->
-  <% if @post_image.user == current_user %>
+  <% if (@post_image.user == current_user) || current_user.admin? %>
     <%= link_to "削除", post_image_path(@post_image.id), method: :delete, data: {confirm:"この投稿を削除してよろしいですか？"} %>
   <% end %>
 

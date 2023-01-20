@@ -11,6 +11,16 @@
         <!--ログイン済みユーザーのヘッダー-->
         <% if user_signed_in? %>
           <h5 class="mt-2 mr-5" style="color:white;">ようこそ、<%= current_user.name %>さん！</h5>
+          <!--ログイン中の管理者のみ表示-->
+          <% if current_user&.admin? %>
+            <h5 class="mt-2 mr-5" style="color:white;"><管理者ログイン中></h5>
+            <li>
+              <%= link_to users_path, class:"nav-link text-light" do %>
+                <i class="fa-solid fa-users"></i> ユーザーリスト
+              <% end %>
+            </li>
+          <% end %>
+
           <li>
             <%= link_to post_images_path, class:"nav-link text-light" do %>
               <i class="fa-solid fa-drumstick-bite"></i> お肉一覧

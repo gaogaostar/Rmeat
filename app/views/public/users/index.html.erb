@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-11 col-lg-8 px-5 px-sm-0 mx-auto my-3" >
+      <h3 class="mb-3">ユーザーリスト</h3>
+      <table class='table'>
+        <thead class="table-dark">
+          <tr>
+            <th>登録日</th>
+            <th>会員ID</th>
+            <th>氏名</th>
+            <th>メールアドレス</th>
+            <th>ステータス</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+          <tr>
+            <td class="align-middle"><%= user.created_at.strftime('%Y/%m/%d') %></td>
+            <td class="align-middle"><%= user.id %></td>
+            <td class="align-middle"><%= user.name %></td>
+            <td class="align-middle"><%= user.email %></td>
+            <td class="align-middle">
+              <% if user.admin %>
+                <p class="text-success font-weight-bold">管理者</p>
+              <% else %>
+                <p class="text-muted font-weight-bold">ユーザー</p>
+              <% end %>
+            </td>
+            <td class="align-middle"><p class="m-0"><%= link_to "削除", user_path(user), method: :delete, data: {confirm:"管理者権限でこのユーザーを削除しますか？"}, class:"btn btn-danger" %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-5 offset-4"><%#= paginate @users %></div>
+  </div>
+</div>
