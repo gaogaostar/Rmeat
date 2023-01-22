@@ -1,0 +1,63 @@
+<h2>gmap</h2>
+
+<!-- 地名入力用のinputを追加 -->
+<input id="address" type="textbox" value="GeekSalon">
+<!-- buttonをクリックしたらcodeAddressを実行　-->
+<input type="button" value="Encode" onclick="codeAddress()">
+<div id="display">何かが表示される、、、、！</div>
+
+<div id="map"></div>
+
+<style>
+#map {
+  height: 600px;
+  width: 600px;
+}
+</style>
+
+<script>
+let map
+let geocoder
+
+const display = document.getElementById("display")
+
+function initMap(){
+  geocoder = new google.maps.Geocoder()
+
+  map = new google.maps.Map(document.getElementById("map"), {
+    //latが緯度、lngが経度
+    center: {lat: 40.7828, lng:-73.9653},
+    //数値は0〜21まで指定できる。数値が大きいほど拡大
+    zoom: 12,
+  });
+  //positionに指定した座標にピンを表示
+  marker = new google.maps.Marker({
+    position:  {lat: 40.7828, lng:-73.9653},
+    map: map
+  });
+}
+
+
+//検索フォームのボタンが押された時に実行
+function codeAddress(){
+  //検索フォームの入力内容を取得
+  let inputAddress = document.getElementById("address").value;
+
+  geocoder.geocode( { "address": inputAddress}, function(results, status) {
+    //該当する検索結果がヒットした時に、地図の中心を検索結果の緯度経度に更新する
+    if (status == "OK") {
+      map.setCenter(results[0].geometry.location);
+      // google.maps.MarkerでGoogleMap上の指定位置にマーカが立つ
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+      display.textContent = "検索結果：" + results[ 0 ].geometry.location
+    } else {
+      alert("該当する結果がありませんでした：" + status);
+    }
+  });
+}
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>

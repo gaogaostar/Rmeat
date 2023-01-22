@@ -78,7 +78,7 @@ class Public::PostImagesController < ApplicationController
   private
 
   def post_image_params
-    params.require(:post_image).permit(:image, :shop_name, :shop_location, :star, :title, :body, :keyword, tag_ids:[])
+    params.require(:post_image).permit(:image, :shop_name, :shop_location, :lat, :lng, :star, :title, :body, :keyword, tag_ids:[])
   end
 
   # before_actionのメソッド：投稿したユーザーのみが編集・削除できる

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'maps/index'
 # deviseのルーティング
   # ユーザー用
   devise_for :users, skip: [:passwords], controllers: {
@@ -20,12 +21,14 @@ Rails.application.routes.draw do
 
 # ユーザー側のルーティング
   scope module: :public do
-    root to:"homes#top"
+    # root to:"homes#top"
     resources :users, only: [:index, :show, :edit, :update, :destroy]
     get "search_tag" => "post_images#search_tag"
     get "search_keyword" => "post_images#search_keyword"
     resources :post_images do
       resources :post_comments, only: [:create, :destroy]
+    root to: 'maps#index'
+    resources :maps, only: [:index]
     end
   end
 
