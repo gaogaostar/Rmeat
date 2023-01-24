@@ -1,62 +1,67 @@
-<div class="container">
-
-  <!--検索フォーム-->
-  <div class="row">
-    <%= form_with(url: search_keyword_path, local: true, method: :get, class: "search-form") do |form| %>
-      <%= form.text_field :keyword, placeholder: "投稿を検索する", class: "search-input" %>
-      <%= form.submit "検索", class: "search-btn" %>
-    <% end %>
-  </div>
-
-  <div class="row">
+<nav id="sidebar" class="col-md-3 col-lg-2 position-sticky d-md-block bg-light sidebar">
+  <!--サイドバー-->
+  <div class=" pt-md-5">
     <!--タグリスト-->
-    <p>タグ一覧</p>
-    <% @tag_list.each do |tag_list| %>
-      <%= link_to tag_list.tag_name, search_tag_path(tag_id: tag_list.id) %>
-      <%= "(#{tag_list.post_images.count})" %>
-    <% end %>
+    <div>
+      <p>タグ一覧</p>
+      <% @tag_list.each do |tag_list| %>
+        <%= link_to tag_list.tag_name, search_tag_path(tag_id: tag_list.id) %>
+        <%= "(#{tag_list.post_images.count})" %>
+      <% end %>
+    </div>
   </div>
+</nav>
 
+<div class="container">
   <div class="row">
-    <h4>お肉一覧</h4>
-  </div>
 
-  <div class="row">
-    <% @post_images.each do |post_image| %>
 
-      <!--カードスタイル-->
-      <div class="card" style="width: 300px;">
-        <!--カード画像-->
-        <div class="card-img-top" style="width:300px; height:250px;">
-          <%= link_to post_image_path(post_image.id) do %>
-            <%= image_tag post_image.get_image, style:"width: 100%; height: 100%; object-fit: cover;" %>
-          <% end %>
-        </div>
-        <!--カード内容-->
-        <div class="card-body">
-          <h5 class="card-title mb-0"><%= post_image.title %></h5>
-          <div class="card-text">
-            <div class="star-rating position-relative overflow-hidden" style="width: 5em;">
-              <div class="star-rating-front position-absolute top-0 start-0" style="color:#fc0; width:<%= post_image.star_percentage %>%">★★★★★</div>
-              <div class="star-rating-back" style="color:#ccc">★★★★★</div>
-            </div>
-            <div>店名：<%= post_image.shop_name %></div>
-            <div>投稿ユーザー：<%= post_image.user.name %></div>
-            <div><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></div>
-            <!--投稿一覧画面で投稿に紐づくタグを表示-->
-            <% unless post_image.tags.blank? %>
-              <div><i class="fa-solid fa-tag"></i><%= post_image.tags.map(&:tag_name).join(',') %></div>
-            <% end %>
-
-            <!--管理者削除ボタン-->
-            <% if current_user&.admin? %>
-              <%= link_to "管理者削除", post_image_path(post_image.id), method: :delete, class:"btn btn-danger", data: {confirm:"管理者権限によりこの投稿を削除しますか？"} %>
-            <% end %>
-          </div>
-        </div>
+    <!--メイン-->
+    <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
+      <div class="row">
+        <h4>お肉一覧</h4>
       </div>
 
-    <% end %>
-  </div>
+      <div class="row">
+        <% @post_images.each do |post_image| %>
 
+          <!--カードスタイル-->
+          <div class="card" style="width: 300px;">
+            <!--カード画像-->
+            <div class="card-img-top" style="width:300px; height:250px;">
+              <%= link_to post_image_path(post_image.id) do %>
+                <%= image_tag post_image.get_image, style:"width: 100%; height: 100%; object-fit: cover;" %>
+              <% end %>
+            </div>
+            <!--カード内容-->
+            <div class="card-body">
+              <h5 class="card-title mb-0"><%= post_image.title %></h5>
+              <div class="card-text">
+                <div class="star-rating position-relative overflow-hidden" style="width: 5em;">
+                  <div class="star-rating-front position-absolute top-0 start-0" style="color:#fc0; width:<%= post_image.star_percentage %>%">★★★★★</div>
+                  <div class="star-rating-back" style="color:#ccc">★★★★★</div>
+                </div>
+                <div>店名：<%= post_image.shop_name %></div>
+                <div>投稿ユーザー：<%= post_image.user.name %></div>
+                <div><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></div>
+                <!--投稿一覧画面で投稿に紐づくタグを表示-->
+                <% unless post_image.tags.blank? %>
+                  <div><i class="fa-solid fa-tag"></i><%= post_image.tags.map(&:tag_name).join(',') %></div>
+                <% end %>
+
+                <!--管理者削除ボタン-->
+                <% if current_user&.admin? %>
+                  <%= link_to "管理者削除", post_image_path(post_image.id), method: :delete, class:"btn btn-danger", data: {confirm:"管理者権限によりこの投稿を削除しますか？"} %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+
+
+
+  </div>
 </div>

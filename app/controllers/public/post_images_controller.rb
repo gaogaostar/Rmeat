@@ -77,10 +77,6 @@ class Public::PostImagesController < ApplicationController
 
   private
 
-  def post_image_params
-    params.require(:post_image).permit(:image, :shop_name, :shop_location, :lat, :lng, :star, :title, :body, :keyword, tag_ids:[])
-  end
-
   # before_actionのメソッド：投稿したユーザーのみが編集・削除できる
   def ensure_correct_user
     @post_image = PostImage.find(params[:id])
@@ -94,5 +90,8 @@ class Public::PostImagesController < ApplicationController
     redirect_to root_path unless current_user.admin?
   end
 
+  def post_image_params
+    params.require(:post_image).permit(:image, :shop_name, :shop_location, :lat, :lng, :star, :title, :body, :keyword, tag_ids:[])
+  end
 
 end
