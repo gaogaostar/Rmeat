@@ -1,5 +1,5 @@
-<header class="sticky-top shadow-sm" style="background:rgb(13,13,13)">
-  <nav class="navbar navbar-expand-lg navbar-dark">
+<header class="sticky-top shadow-lg">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background:rgb(13,13,13)">
     <div class="container-fluid">
       <a class="navbar-brand mx-4 py-0" href="/">
         <%= image_tag ('logo1.png'), size:"80x60" %><%= image_tag ('logo2.png'), size:"100x60", class:"pt-2" %>
@@ -12,12 +12,6 @@
 
         <!--ログイン済みユーザーのヘッダー-->
         <% if user_signed_in? %>
-          <li>
-            <%= form_with(url: search_keyword_path, local: true, method: :get, class: "search-form") do |form| %>
-              <%= form.text_field :keyword, placeholder: "投稿を検索する", class: "search-input" %>
-              <%= form.submit "検索", class: "search-btn" %>
-            <% end %>
-          </li>
           <h5 class="mt-2 mr-5" style="color:white;">ようこそ、<%= current_user.name %>さん！</h5>
           <!--ログイン中の管理者のみ表示-->
           <% if current_user&.admin? %>
@@ -91,7 +85,19 @@
       </div>
     </div>
   </nav>
+
   <!--検索フォーム-->
-  <div class="">
+  <div class="sub-header" style="background:#752100;">
+    <div class="container">
+      <div class="row d-flex py-2 px-5">
+        <p class="text-light d-flex align-items-center mb-0">キーワードで探す：</p>
+        <%= form_with(url: search_keyword_path, local: true, method: :get, class: "search-form") do |form| %>
+          <%= form.text_field :keyword, placeholder: "投稿を検索する", class: "search-input" %>
+          <%= form.submit "検索", class: "search-btn" %>
+        <% end %>
+      </div>
+    </div>
   </div>
+
+
 </header>

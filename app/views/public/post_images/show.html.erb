@@ -1,17 +1,25 @@
-<h1>Public::PostImages#show</h1>
-
-
-<div>
-  <%= image_tag @post_image.get_image, size:"300x300" %>
-    <div class="star-rating position-relative" style="width: 5em;">
-      <div class="star-rating-front position-absolute top-0 start-0 overflow-hidden" style="color:#fc0; width:<%= @post_image.star_percentage %>%">★★★★★</div>
-      <div class="star-rating-back" style="color:#ccc">★★★★★</div>
+<div class="container">
+  <div class="row">
+    <!--投稿画像-->
+    <div class="col-6">
+      <%= image_tag @post_image.get_image, style:"width:100%; hight:auto;" %>
     </div>
-    <p>評価：<%= @post_image.star %></p>
 
-  <p>ショップ名：<%= @post_image.shop_name %></p>
+    <!--投稿内容-->
+    <div class="col-6">
+      <h3><%= @post_image.title %></h3>
+      <!--星評価-->
+      <div class="d-flex">
+        <p class="mb-0 d-flex align-items-center mr-3">評価：<%= @post_image.star %></p>
+        <div class="star-rating position-relative" style="width: 5em; font-size:20px;">
+          <div class="star-rating-front position-absolute top-0 start-0 overflow-hidden" style="color:#fc0; width:<%= @post_image.star_percentage %>%">★★★★★</div>
+          <div class="star-rating-back" style="color:#ccc">★★★★★</div>
+        </div>
+      </div>
+
+  <p>店名：<%= @post_image.shop_name %></p>
   <p>説明：<%= @post_image.body %></p>
-  <p>投稿ユーザー画像：<%= image_tag @post_image.user.get_profile_image(100,100) %></p>
+  <!--<p>投稿ユーザー画像：<%#= image_tag @post_image.user.get_profile_image(100,100) %></p>-->
 
   <p>ユーザーネーム：<%= @post_image.user.name %></p>
   <p>投稿日：<%= @post_image.created_at.strftime('%Y/%m/%d') %></p>
@@ -52,4 +60,12 @@
   <%= link_to "一覧に戻る", post_images_path %>
 
 
+
+    </div>
+
+
+
+
+  </div>
 </div>
+

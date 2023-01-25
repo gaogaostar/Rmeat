@@ -1,32 +1,22 @@
-<nav id="sidebar" class="col-md-3 col-lg-2 position-sticky d-md-block bg-light sidebar">
-  <!--サイドバー-->
-  <div class=" pt-md-5">
-    <!--タグリスト-->
+<div class="container">
+  <!--タグリスト-->
+  <div class="row border border-dark rounded p-2 mb-4" style="background:#fbfaf5;">
     <div>
-      <p>タグ一覧</p>
+      <p class="mb-0"><strong>タグで探す</strong></p>
       <% @tag_list.each do |tag_list| %>
         <%= link_to tag_list.tag_name, search_tag_path(tag_id: tag_list.id) %>
         <%= "(#{tag_list.post_images.count})" %>
       <% end %>
     </div>
   </div>
-</nav>
-
-<div class="container">
-  <div class="row">
-
 
     <!--メイン-->
-    <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
-      <div class="row">
-        <h4>お肉一覧</h4>
-      </div>
 
       <div class="row">
         <% @post_images.each do |post_image| %>
 
           <!--カードスタイル-->
-          <div class="card" style="width: 300px;">
+          <div class="card mx-auto mb-3" style="width: 300px;">
             <!--カード画像-->
             <div class="card-img-top" style="width:300px; height:250px;">
               <%= link_to post_image_path(post_image.id) do %>
@@ -37,6 +27,7 @@
             <div class="card-body">
               <h5 class="card-title mb-0"><%= post_image.title %></h5>
               <div class="card-text">
+                <!--星-->
                 <div class="star-rating position-relative overflow-hidden" style="width: 5em;">
                   <div class="star-rating-front position-absolute top-0 start-0" style="color:#fc0; width:<%= post_image.star_percentage %>%">★★★★★</div>
                   <div class="star-rating-back" style="color:#ccc">★★★★★</div>
@@ -59,9 +50,7 @@
 
         <% end %>
       </div>
-    </div>
 
 
 
-  </div>
 </div>
