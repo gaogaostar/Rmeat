@@ -1,12 +1,15 @@
 <div class="container">
   <div class="row">
-    <!--投稿画像-->
-    <div class="col-6">
+
+    <div class="col-md-6">
+      <!--投稿画像-->
       <%= image_tag @post_image.get_image, style:"width:100%; hight:auto;" %>
+      <!--一覧に戻る-->
+      <%= link_to "一覧に戻る", post_images_path, class:"btn btn-info mt-2" %>
     </div>
 
     <!--投稿内容-->
-    <div class="col-6">
+    <div class="col-md-6">
       <h3><%= @post_image.title %></h3>
       <!--星評価-->
       <div class="d-flex">
@@ -17,55 +20,77 @@
         </div>
       </div>
 
-  <p>店名：<%= @post_image.shop_name %></p>
-  <p>説明：<%= @post_image.body %></p>
-  <!--<p>投稿ユーザー画像：<%#= image_tag @post_image.user.get_profile_image(100,100) %></p>-->
+      <!--店名-->
+      <p>店名：<%= @post_image.shop_name %></p>
+      <!--投稿の説明-->
+      <p>説明：<%= @post_image.body %></p>
+      <!--投稿タグ-->
+      <p class="d-flex">タグ：
+        <% @post_tags.each do |post_tag| %>
+          <%= link_to post_tag.tag_name, search_tag_path(tag_id: post_tag.id) %>
+          <%= "(#{post_tag.post_images.count})" %>
+        <% end %>
+      </p>
 
-  <p>ユーザーネーム：<%= @post_image.user.name %></p>
-  <p>投稿日：<%= @post_image.created_at.strftime('%Y/%m/%d') %></p>
 
-  <div>
-  <!--投稿に対して紐付けられたタグを表示-->
-  <% @post_tags.each do |post_tag| %>
-    <%= link_to post_tag.tag_name, search_tag_path(tag_id: post_tag.id) %>
-    <%= "(#{post_tag.post_images.count})" %>
-  <% end %>
-  </div>
 
-  <!--投稿削除ボタン-->
-  <% if (@post_image.user == current_user) || current_user.admin? %>
-    <%= link_to "削除", post_image_path(@post_image.id), method: :delete, data: {confirm:"この投稿を削除してよろしいですか？"} %>
-  <% end %>
+      <!--<p>投稿ユーザー画像：<%#= image_tag @post_image.user.get_profile_image(100,100) %></p>-->
+      <p class="mb-0">投稿ユーザー：<%= @post_image.user.name %></p>
+      <p>投稿日：<%= @post_image.created_at.strftime('%Y/%m/%d') %></p>
 
-  <div>
-    <p>コメント件数：<%= @post_image.post_comments.count %></p>
-    <% @post_image.post_comments.each do |post_comment| %>
-      <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
-      <%= post_comment.user.name %>
-      <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
-      <!--コメント削除ボタン-->
-      <% if post_comment.user == current_user %>
-        <%= link_to "削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete %>
+
+      <!--投稿削除ボタン-->
+      <% if (@post_image.user == current_user) || current_user.admin? %>
+        <%= link_to "投稿を削除する", post_image_path(@post_image.id), method: :delete, class:"btn btn-outline-danger mb-3", data: {confirm:"この投稿を削除してよろしいですか？"} %>
       <% end %>
 
-    <% end %>
-  </div>
-  <div>
-    <%= form_with model: [@post_image, @post_comment] do |f| %>
-      <%= f.text_area :comment, rows: '5', placeholder: "コメントを入力" %>
-      <%= f.submit "送信する" %>
-    <% end %>
-  </div>
+      <div>
+        <!--コメント投稿フォーム-->
+        <div>
+          <%= form_with model: [@post_image, @post_comment] do |f| %>
+            <%= f.text_area :comment, rows:"3", placeholder: "コメントを入力", style:"width:70%;" %><br>
+            <%= f.submit "コメントする" %>
+          <% end %>
+        </div>
 
-  <%= link_to "一覧に戻る", post_images_path %>
+        <!--コメント件数-->
+        <p>コメント件数：<%= @post_image.post_comments.count %></p>
+        <!--投稿コメント一覧-->
+        <% @post_image.post_comments.each do |post_comment| %>
+          <%#= image_tag post_comment.user.get_profile_image(100,100) %>
+          <%= post_comment.created_at.strftime('%Y/%m/%d') %>
+          <%= post_comment.user.name %>：<%= post_comment.comment %>
+          <!--コメント削除ボタン-->
+          <% if post_comment.user == current_user %>
+            <%= link_to "削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete %><br>
+          <% end %>
 
-
-
+        <% end %>
+      </div>
     </div>
-
-
-
-
   </div>
+
+  <!--地図-->
+  <div id="map" style="width:100%; height:600px;"></div>
+
+  <script>
+    let map
+    let marker
+    function initMap() {
+      geocoder = new google.maps.Geocoder()
+
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: {lat:<%= @post_image.lat %>, lng:<%= @post_image.lng %>},
+        zoom: 17,
+      });
+
+      marker = new google.maps.Marker({
+        position: {lat: <%= @post_image.lat %>, lng: <%= @post_image.lng %>},
+        map: map
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
+
 </div>
 

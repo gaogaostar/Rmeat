@@ -1,62 +1,46 @@
-<h2>gmap</h2>
+<h2>地図で探す</h2>
 
-<!-- 地名入力用のinputを追加 -->
-<input id="address" type="textbox" value="GeekSalon">
-<!-- buttonをクリックしたらcodeAddressを実行　-->
-<input type="button" value="Encode" onclick="codeAddress()">
-<div id="display">何かが表示される、、、、！</div>
-
-<div id="map"></div>
-
-<style>
-#map {
-  height: 600px;
-  width: 600px;
-}
-</style>
+<div id="map" style="width:100%; height:600px;"></div>
 
 <script>
-let map
-let geocoder
 
-const display = document.getElementById("display")
+function initMap() {
+  let latlng = new google.maps.LatLng(38.60, 139.5);
+  let styles = [
+    {
+      stylers: [
+        {"saturation": 0},
+        {"lightness": 0}
+        ]
+    }];
 
-function initMap(){
-  geocoder = new google.maps.Geocoder()
-
-  map = new google.maps.Map(document.getElementById("map"), {
-    //latが緯度、lngが経度
-    center: {lat: 40.7828, lng:-73.9653},
-    //数値は0〜21まで指定できる。数値が大きいほど拡大
-    zoom: 12,
+  let map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 5.5,
+    styles: styles,
+    center: latlng
   });
-  //positionに指定した座標にピンを表示
-  marker = new google.maps.Marker({
-    position:  {lat: 40.7828, lng:-73.9653},
-    map: map
-  });
-}
 
+  let transitLayer = new google.maps.TransitLayer();
+  transitLayer.setMap(map);
 
-//検索フォームのボタンが押された時に実行
-function codeAddress(){
-  //検索フォームの入力内容を取得
-  let inputAddress = document.getElementById("address").value;
-
-  geocoder.geocode( { "address": inputAddress}, function(results, status) {
-    //該当する検索結果がヒットした時に、地図の中心を検索結果の緯度経度に更新する
-    if (status == "OK") {
-      map.setCenter(results[0].geometry.location);
-      // google.maps.MarkerでGoogleMap上の指定位置にマーカが立つ
-      var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
+  // 複数マーカー
+  <% @post_images.each do |post_image| %>
+    (function() {
+      let markerLatLng = { lat: <%= post_image.lat %>, lng: <%= post_image.lng %> };
+      let marker = new google.maps.Marker({
+        position: markerLatLng,
+        map: map
       });
-      display.textContent = "検索結果：" + results[ 0 ].geometry.location
-    } else {
-      alert("該当する結果がありませんでした：" + status);
-    }
-  });
+      // マーカークリックで詳細へ
+      let infowindow = new google.maps.InfoWindow({
+        position: markerLatLng,
+        content: "<a href='<%= post_image_path(post_image.id) %>' target='_blank'><%= post_image.shop_name %></a>"
+      });
+      marker.addListener('click', function(){
+        infowindow.open(map, marker);
+      });
+    })();
+  <% end %>
 }
 
 </script>

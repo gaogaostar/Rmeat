@@ -28,7 +28,7 @@ class Public::PostImagesController < ApplicationController
   def show
     @post_image = PostImage.find(params[:id])
     @post_comment = PostComment.new
-    @post_tags = @post_image.tags #クリックした投稿に紐付けられているタグの取得。
+    @post_tags = @post_image.tags
   end
 
   def edit
@@ -53,21 +53,19 @@ class Public::PostImagesController < ApplicationController
   end
 
   def search_keyword
-    # キーワードが入力されていないとトップページに飛ぶ
-
+    # キーワードが入力されていないと投稿一覧に飛ぶ
     redirect_to post_images_path if params[:keyword] == ""
-  # 空白で分割
+    # 空白で分割
     @keywords = params[:keyword].split(/[[:blank:]]+/).select(&:present?)
-
-  # @post_images = PostImage
-  # 分割したキーワードごとに検索
+    # @post_images = PostImage
+    # 分割したキーワードごとに検索
     @keywords.each do |keyword|
-  #   @post_images = @post_images.or(Item.where("title LIKE(?) OR body LIKE(?) OR shop_name LIKE(?)", "%#{keyword}%"))
-  # end
-  # 先頭の空白対策
-  # next if keyword == ""
-    # 部分一致で検索
-      @post_images = PostImage.where(["title LIKE(?) OR body LIKE(?) OR shop_name LIKE(?)", "%#{params[:keyword]}%", "%#{params[:keyword]}%", "%#{params[:keyword]}%"]) #部分一致で検索
+      # @post_images = @post_images.or(Item.where("title LIKE(?) OR body LIKE(?) OR shop_name LIKE(?)", "%#{keyword}%"))
+      # end
+      # 先頭の空白対策
+      # next if keyword == ""
+      # 部分一致で検索
+      @post_images = PostImage.where(["title LIKE(?) OR body LIKE(?) OR shop_name LIKE(?)", "%#{params[:keyword]}%", "%#{params[:keyword]}%", "%#{params[:keyword]}%"])
     end
     #重複した投稿を削除する
     # @post_images.uniq!
@@ -77,7 +75,7 @@ class Public::PostImagesController < ApplicationController
 
   private
 
-  # before_actionのメソッド：投稿したユーザーのみが編集・削除できる
+  # before_action:投稿したユーザーのみが編集・削除できる
   def ensure_correct_user
     @post_image = PostImage.find(params[:id])
     unless (@post_image.user == current_user) || current_user.admin?
@@ -85,7 +83,7 @@ class Public::PostImagesController < ApplicationController
     end
   end
 
-  # 管理者かどうか確認するメソッド
+  # before_action:管理者かどうか確認
   def admin_user
     redirect_to root_path unless current_user.admin?
   end
