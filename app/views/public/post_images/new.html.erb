@@ -1,99 +1,90 @@
-<h1>新規投稿フォーム</h1>
+<div class="container">
+  <div class="row">
+    <h3>新規投稿フォーム</h3>
+    <!--エラーメッセージ-->
+    <%= render 'layouts/errors', obj: @post_image %>
+  </div>
+  <div class="row">
+    <table class="table table-borderless">
+      <tbody>
+      <%= form_with model: @post_image, local: true do |f| %>
+        <tr>
+          <th scope="row">画像</th>
+          <td><%= f.file_field :image, accept: "image/*" %></td>
+        </tr>
 
-  <% if @post_image.errors.any? %>
-    <div class="notification is-denger">
-      <h2><%= @post_image.errors.count %>件のエラーが発生しました</h2>
-      <ul>
-        <% @post_image.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+        <tr>
+          <th scope="row">投稿タイトル</th>
+          <td><%= f.text_field :title %></td>
+        </tr>
 
-  <%= form_with model: @post_image, local: true do |f| %>
+        <tr>
+          <th scope="row">説明</th>
+          <td><%= f.text_area :body %></td>
+        </tr>
 
-    <h4>画像</h4>
-      <%= f.file_field :image, accept: "image/*" %>
+        <tr>
+          <th scope="row">評価</th>
+          <td>
+            <div class="rating-box">
+              <%= f.hidden_field :star, id:"rating-value" %>
+              <div class="main-rating d-flex">
+                <div class="ratings", style="cursor:pointer">
+                  <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
+                  <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
+                  <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
+                  <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
+                  <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
+                </div>
+                <div class="ml-3 rating-value-display">
+                  <span id="rating-value-display">0</span>/5
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
 
-    <h4>店名</h4>
-      <%= f.text_field :shop_name %>
+        <tr>
+          <th scope="row">タグ</th>
+          <td><%= f.text_field :tag_name %></td>
+        </tr>
 
-    <!--<h4>価格</h4>-->
-      <%#= f.text_field :price %>
+        <tr>
+          <th scope="row">店名</th>
+          <td><%= f.text_field :shop_name %></td>
+        </tr>
 
-    <h4>投稿タイトル</h4>
-      <%= f.text_field :title %>
+        <tr>
+          <th scope="row">店の所在地</th>
+          <td><%= f.text_field :shop_location %></td>
+        </tr>
 
-    <h4>説明</h4>
-      <%= f.text_area :body %>
+        <tr>
+          <th scope="row">店のMAP</th>
+          <td>
+            <input id="address" type="textbox" value="店の住所を入力して検索">
+            <input type="button" value="検索" onclick="codeAddress()">
+            <p>マーカーをドラック＆ドロップで位置の調整ができます。<p>
+            <div class="actions">
+              <%= f.label :lat,"緯度" %>
+              <%= f.text_field :lat,:value =>"緯度", id: :lat %>
+              <%= f.label :lng,"経度" %>
+              <%= f.text_field :lng,:value =>"経度", id: :lng %>
+            </div>
+            <div id='map' style="width: 600px; height: 600px;"></div>
+            <div class="m-2"><%= f.submit "投稿する", class:"btn btn-secondary btn-lg" %></div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 
-    <h4>５段階評価</h4>
-      <div class="rating-box">
-        <%= f.label :star,'評価', class:'col-md-3 col-form-label' %>
-        <%= f.hidden_field :star, id: "rating-value" %>
+  <%= link_to "一覧に戻る", post_images_path, class:"btn btn-info mt-2" %>
 
-        <div class="main-rating d-flex">
-          <div class="ratings", style="cursor:pointer">
-            <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
-            <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
-            <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
-            <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
-            <span class="fa fa-star-o" id="star" style="color:#fc0"></span>
-          </div>
-          <div class="ml-3 rating-value-display">
-            <span id="rating-value-display">0</span>/5
-          </div>
-        </div>
-      </div>
-
-    <h4>タグ</h4>
-      <%= f.text_field :tag_name %>
-
-
-
-
-
-        <!--<%# @list_tag.each do |tag| %>-->
-        <!--  <div>-->
-        <!--    <%#= f.check_box :tag_name,{ multiple: true, checked: @post_image.tags.present? ? @post_image.tags.split(",").include?(tag) : false } %>-->
-        <!--    <span><%#= tag.tag_name %></span>-->
-        <!--  </div>-->
-        <!--<%# end %>-->
-
-
-    <!--<div class='form-group'>-->
-    <!--  <%#= f.collection_check_boxes(:tag_ids, Tag.all, :id, :tag_name) do |tag| %>-->
-    <!--    <div class='form-check'>-->
-    <!--      <%#= tag.label class: 'form-check-label' do %>-->
-    <!--        <%#= tag.check_box class: 'form-check-input' %>-->
-    <!--        <%#= tag.text %>-->
-    <!--      <%# end %>-->
-    <!--    </div>-->
-    <!--  <%# end %>-->
-    <!--</div>-->
-    <h4>お店の場所</h4>
-      <div class="actions">
-        <%#= f.label :body,"内容" %>
-        <%#= f.text_field :body %>
-        <%= f.label :lat,"緯度" %>
-        <%= f.text_field :lat,:value =>"緯度", id: :lat %>
-        <%= f.label :lng,"経度" %>
-        <%= f.text_field :lng,:value =>"経度", id: :lng %>
-      </div>
-      <%#= f.text_field :shop_location %>
-
-<h2>Map</h2>
-
-<input id="address" type="textbox" value="GeekSalon">
-<input type="button" value="検索" onclick="codeAddress()">
-<p>マーカーをドラック＆ドロップで位置の調整ができます。<p>
-<div id='map' style="width: 600px; height: 600px;"></div>
+</div>
 
 
-<!--<input type="text" size="55" id="search" value="池袋駅付近のカフェ" />-->
-<!--<input type="button" size="55" value="検索" onClick="SearchGo()" />-->
-<!--<div id="map_canvas" style="width: 600px; height: 600px;"></div>-->
 
 
 <script>
@@ -104,112 +95,12 @@ function initMap(){
   geocoder = new google.maps.Geocoder()
 
   map = new google.maps.Map(document.getElementById('map'), {
-    center:  {lat: 35.6803997, lng:139.7690174},  //東京
+    // 東京
+    center:  {lat: 35.6803997, lng:139.7690174},
     zoom: 15,
 
   });
 }
-
-
-
-
-// var mayMap;
-// var service;
-
-// // マップの初期設定
-// function initialize() {
-//   // Mapクラスのインスタンスを作成（緯度経度は東京に設定）
-//   var initPos = new google.maps.LatLng(35.6803997, lng:139.7690174);
-//   // 地図のプロパティを設定（倍率、マーカー表示位置、地図の種類）
-//   var myOptions = {
-//     zoom: 15,
-//     center: initPos,
-//     mapTypeId: google.maps.MapTypeId.ROADMAP
-//   };
-//   // #map_canvas要素にMapクラスの新しいインスタンスを作成
-//   myMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-//   // 検索の条件を指定（緯度経度、半径、検索の分類）
-//   var request = {
-//     location: initPos,
-//     radius: 1000,      // ※１ 表示する半径領域を設定(1 = 1M)
-//     types: ["restaurant", "bar", "cafe", "food", "meal_delivery", "meal_takeaway", "store"]    // ※２ typesプロパティの施設タイプを設定
-//   };
-//   var service = new google.maps.places.PlacesService(myMap);
-//   service.search(request, Result_Places);
-// }
-
-// // 検索結果を受け取る
-// function Result_Places(results, status){
-//   // Placesが検索に成功したかどうかをチェック
-//   if(status == google.maps.places.PlacesServiceStatus.OK) {
-//     for (var i = 0; i < results.length; i++) {
-//       // 検索結果の数だけ反復処理を変数placeに格納
-//       var place = results[i];
-//         createMarker({
-//         text: place.name,
-//         position: place.geometry.location
-//       });
-//     }
-//   }
-// }
-
-// // 入力キーワードと表示範囲を設定
-// function SearchGo() {
-//   var initPos = new google.maps.LatLng(0,0);
-//   var mapOptions = {
-//     center: initPos,
-//     zoom: 0,
-//     mapTypeId: google.maps.MapTypeId.ROADMAP
-//   };
-//   // #map_canvas要素にMapクラスの新しいインスタンスを作成
-//   myMap = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-//   service = new google.maps.places.PlacesService(myMap);
-//   // input要素に入力されたキーワードを検索の条件に設定
-//   var myword = document.getElementById("search");
-//   var request = {
-//     query: myword.value,
-//     radius: 5000,
-//     location: myMap.getCenter()
-//   };
-//   service.textSearch(request, result_search);
-// }
-
-// // 検索の結果を受け取る
-// function result_search(results, status) {
-//   var bounds = new google.maps.LatLngBounds();
-//   for(var i = 0; i < results.length; i++){
-//     createMarker({
-//       position: results[i].geometry.location,
-//       text: results[i].name,
-//       map: myMap
-//     });
-//     bounds.extend(results[i].geometry.location);
-//   }
-//   myMap.fitBounds(bounds);
-// }
-
-// // 該当する位置にマーカーを表示
-// function createMarker(options) {
-//   // マップ情報を保持しているmyMapオブジェクトを指定
-//   options.map = myMap;
-//   // Markcrクラスのオブジェクトmarkerを作成
-//   var marker = new google.maps.Marker(options);
-//   // 各施設の吹き出し(情報ウインドウ)に表示させる処理
-//   var infoWnd = new google.maps.InfoWindow();
-//   infoWnd.setContent(options.text);
-//   // addListenerメソッドを使ってイベントリスナーを登録
-//   google.maps.event.addListener(marker, "click", function(){
-//       infoWnd.open(myMap, marker);
-//   });
-//   return marker;
-// }
-
-// // ページ読み込み完了後、Googleマップを表示
-// google.maps.event.addDomListener(window, "load", initialize);
-
-
-
-
 
 // 検索後のマップ作成
 let geocoder
@@ -251,15 +142,7 @@ function codeAddress(){
 }
 
 </script>
-<!--<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=<%#= ENV['API_KEY']%>&libraries=places" charset="utf-8"></script>-->
 
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
 
-
-
-    <%= f.submit "投稿する" %>
-  <% end %>
-
-  <%= link_to "戻る", post_images_path %>
-
-  <%= javascript_pack_tag "star.js" %>
+<%= javascript_pack_tag "star.js" %>

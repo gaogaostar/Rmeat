@@ -78,7 +78,7 @@ class Public::PostImagesController < ApplicationController
   # before_action:投稿したユーザーのみが編集・削除できる
   def ensure_correct_user
     @post_image = PostImage.find(params[:id])
-    unless (@post_image.user == current_user) || current_user.admin?
+    unless (@post_image.user == current_user) || current_user&.admin?
       redirect_to post_images_path
     end
   end

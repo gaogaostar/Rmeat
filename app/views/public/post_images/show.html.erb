@@ -22,6 +22,7 @@
 
       <!--店名-->
       <p>店名：<%= @post_image.shop_name %></p>
+      <p>店の場所：<%= @post_image.shop_location %></p>
       <!--投稿の説明-->
       <p>説明：<%= @post_image.body %></p>
       <!--投稿タグ-->
@@ -40,7 +41,7 @@
 
 
       <!--投稿削除ボタン-->
-      <% if (@post_image.user == current_user) || current_user.admin? %>
+      <% if (@post_image.user == current_user) || current_user&.admin? %>
         <%= link_to "投稿を削除する", post_image_path(@post_image.id), method: :delete, class:"btn btn-outline-danger mb-3", data: {confirm:"この投稿を削除してよろしいですか？"} %>
       <% end %>
 
@@ -59,7 +60,7 @@
         <% @post_image.post_comments.each do |post_comment| %>
           <%#= image_tag post_comment.user.get_profile_image(100,100) %>
           <%= post_comment.created_at.strftime('%Y/%m/%d') %>
-          <%= post_comment.user.name %>：<%= post_comment.comment %>
+          <%= post_comment.user.name %>：<%= post_comment.comment %><br>
           <!--コメント削除ボタン-->
           <% if post_comment.user == current_user %>
             <%= link_to "削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete %><br>
