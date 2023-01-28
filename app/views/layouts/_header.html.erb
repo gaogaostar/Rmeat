@@ -86,25 +86,24 @@
     </div>
   </nav>
 
-  <!--検索フォーム-->
+  <!--検索用ヘッダー-->
   <div class="sub-header" style="background:#752100;">
     <div class="container">
       <div class="text-light d-flex align-items-center py-2 px-5">
         <!--キーワードで探す-->
-        <p class="mb-0">キーワードで探す：</p>
+        <div>キーワードで探す：</div>
         <%= form_with(url: search_keyword_path, local: true, method: :get, class: "search-form") do |form| %>
           <%= form.text_field :keyword, placeholder: "投稿を検索する", class: "search-input" %>
           <%= form.submit "検索", class: "search-btn" %>
         <% end %>
         <!--地図で探す-->
-        <p class="mb-0 ml-5">
+        <div class="ml-5">
         <%= link_to maps_path, class:"text-light" do %>
           <i class="fa-solid fa-map-location-dot"></i> 地図で探す
         <% end %>
-        </p>
+        </div>
       </div>
     </div>
   </div>
-
 
 </header>

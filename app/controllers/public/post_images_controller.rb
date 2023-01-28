@@ -57,18 +57,11 @@ class Public::PostImagesController < ApplicationController
     redirect_to post_images_path if params[:keyword] == ""
     # 空白で分割
     @keywords = params[:keyword].split(/[[:blank:]]+/).select(&:present?)
-    # @post_images = PostImage
     # 分割したキーワードごとに検索
     @keywords.each do |keyword|
-      # @post_images = @post_images.or(Item.where("title LIKE(?) OR body LIKE(?) OR shop_name LIKE(?)", "%#{keyword}%"))
-      # end
-      # 先頭の空白対策
-      # next if keyword == ""
       # 部分一致で検索
-      @post_images = PostImage.where(["title LIKE(?) OR body LIKE(?) OR shop_name LIKE(?)", "%#{params[:keyword]}%", "%#{params[:keyword]}%", "%#{params[:keyword]}%"])
+      @post_images = PostImage.where(["title LIKE(?) OR body LIKE(?) OR shop_name LIKE(?) OR shop_location LIKE(?)", "%#{params[:keyword]}%", "%#{params[:keyword]}%", "%#{params[:keyword]}%", "%#{params[:keyword]}%"])
     end
-    #重複した投稿を削除する
-    # @post_images.uniq!
     @tag_list = Tag.all
   end
 
@@ -83,10 +76,10 @@ class Public::PostImagesController < ApplicationController
     end
   end
 
-  # before_action:管理者かどうか確認
-  def admin_user
-    redirect_to root_path unless current_user.admin?
-  end
+  # # before_action:管理者かどうか確認
+  # def admin_user
+  #   redirect_to root_path unless current_user.admin?
+  # end
 
   def post_image_params
     params.require(:post_image).permit(:image, :shop_name, :shop_location, :lat, :lng, :star, :title, :body, :keyword, tag_ids:[])

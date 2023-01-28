@@ -1,14 +1,24 @@
-<h1>Public::Homes#top</h1>
-<p>Find me in app/views/public/homes/top.html.erb</p>
+<div class="container" id="bg">
+  <div class="row mb-4">
+    <div class="col-12 text-center">
+      <h4>Rmeat（アールミート）</h5>
+      <p class="col-8 m-auto">
+        Rmeat（アールミート）は、生肉、レア肉に特化したお店のレビューサイトです。<br>
+        「生」を意味する「Raw」、そして2つの意味での「Rare」（肉の焼き加減としてのレア、希少・珍しいという意味でのレア）から名付けました。<br>
+        ユーザーは、お肉の写真とともに、お店の情報と評価を投稿することができ、また、他のユーザーが投稿したお店の情報について、魅力的な写真の一覧から探すことができます。
+      </p>
+    </div>
+  </div>
 
-<div class="btn-wrapper col-10 mx-auto">
-  <div class="row">
-    <%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
-  </div>
-  <div class="row">
-    <%= link_to 'Log in',new_user_session_path, class: "btn btn-info btn-sm btn-block mb-3 sign_in" %>
-  </div>
-  <div class="row">
-    <%= link_to 'Sign Up',new_user_registration_path, class: "btn btn-success btn-sm btn-block sign_up" %>
+  <div class="btn-wrapper col-8 mx-auto">
+    <div class="row">
+      <%= link_to "ゲストログイン", users_guest_sign_in_path, class:"btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
+    </div>
+    <div class="row">
+      <%= link_to "ログイン",new_user_session_path, class:"btn btn-info btn-sm btn-block mb-3 sign_in" %>
+    </div>
+    <div class="row">
+      <%= link_to "新規ユーザー登録",new_user_registration_path, class:"btn btn-success btn-sm btn-block sign_up" %>
+    </div>
   </div>
 </div>

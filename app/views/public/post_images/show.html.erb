@@ -5,14 +5,14 @@
       <!--投稿画像-->
       <%= image_tag @post_image.get_image, style:"width:100%; hight:auto;" %>
       <!--一覧に戻る-->
-      <%= link_to "一覧に戻る", post_images_path, class:"btn btn-info mt-2" %>
+      <%= link_to "一覧に戻る", post_images_path, class:"btn btn-info my-3" %>
     </div>
 
     <!--投稿内容-->
     <div class="col-md-6">
       <h3><%= @post_image.title %></h3>
       <!--星評価-->
-      <div class="d-flex">
+      <div class="d-flex mb-2">
         <p class="mb-0 d-flex align-items-center mr-3">評価：<%= @post_image.star %></p>
         <div class="star-rating position-relative" style="width: 5em; font-size:20px;">
           <div class="star-rating-front position-absolute top-0 start-0 overflow-hidden" style="color:#fc0; width:<%= @post_image.star_percentage %>%">★★★★★</div>
@@ -21,8 +21,8 @@
       </div>
 
       <!--店名-->
-      <p>店名：<%= @post_image.shop_name %></p>
-      <p>店の場所：<%= @post_image.shop_location %></p>
+      <p class="mb-0">店名：<%= @post_image.shop_name %></p>
+      <p>所在地：<%= @post_image.shop_location %></p>
       <!--投稿の説明-->
       <p>説明：<%= @post_image.body %></p>
       <!--投稿タグ-->

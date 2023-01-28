@@ -1,30 +1,33 @@
 <div class="container">
   <div class="row">
     <h3>新規投稿フォーム</h3>
-    <!--エラーメッセージ-->
-    <%= render 'layouts/errors', obj: @post_image %>
+    <p class="mb-0 ml-3" style="color:red;">*は必須項目です。</p>
   </div>
+  <!--エラーメッセージ-->
+  <%= render 'layouts/errors', obj: @post_image %>
   <div class="row">
-    <table class="table table-borderless">
+    <%= form_with model: @post_image, local: true do |f| %>
+    <table class="table table-bordered">
       <tbody>
-      <%= form_with model: @post_image, local: true do |f| %>
+
         <tr>
-          <th scope="row">画像</th>
+          <th scope="row">画像 *</th>
           <td><%= f.file_field :image, accept: "image/*" %></td>
         </tr>
 
         <tr>
-          <th scope="row">投稿タイトル</th>
-          <td><%= f.text_field :title %></td>
+          <th scope="row">投稿タイトル *</th>
+          <td><%= f.text_field :title, style:"width:50%", placeholder:"商品名、料理名など" %>
+          </td>
         </tr>
 
         <tr>
           <th scope="row">説明</th>
-          <td><%= f.text_area :body %></td>
+          <td><%= f.text_area :body, rows:"3", style:"width:50%", placeholder:"感想など" %></td>
         </tr>
 
         <tr>
-          <th scope="row">評価</th>
+          <th scope="row">評価 *</th>
           <td>
             <div class="rating-box">
               <%= f.hidden_field :star, id:"rating-value" %>
@@ -46,41 +49,54 @@
 
         <tr>
           <th scope="row">タグ</th>
-          <td><%= f.text_field :tag_name %></td>
-        </tr>
-
-        <tr>
-          <th scope="row">店名</th>
-          <td><%= f.text_field :shop_name %></td>
-        </tr>
-
-        <tr>
-          <th scope="row">店の所在地</th>
-          <td><%= f.text_field :shop_location %></td>
-        </tr>
-
-        <tr>
-          <th scope="row">店のMAP</th>
           <td>
-            <input id="address" type="textbox" value="店の住所を入力して検索">
-            <input type="button" value="検索" onclick="codeAddress()">
-            <p>マーカーをドラック＆ドロップで位置の調整ができます。<p>
-            <div class="actions">
-              <%= f.label :lat,"緯度" %>
-              <%= f.text_field :lat,:value =>"緯度", id: :lat %>
-              <%= f.label :lng,"経度" %>
-              <%= f.text_field :lng,:value =>"経度", id: :lng %>
-            </div>
-            <div id='map' style="width: 600px; height: 600px;"></div>
-            <div class="m-2"><%= f.submit "投稿する", class:"btn btn-secondary btn-lg" %></div>
+            <p>","で区切ることで複数タグをつけることができます</p>
+            <%= f.text_field :tag_name, style:"width:50%", placeholder:"例）牛,馬" %>
           </td>
         </tr>
-      <% end %>
+
+        <tr>
+          <th scope="row">店名 *</th>
+          <td><%= f.text_field :shop_name, style:"width:50%", placeholder:"例）肉の◯◯ ▲▲店" %></td>
+        </tr>
+
+        <tr>
+          <th scope="row">店の所在地 *</th>
+          <td><%= f.text_field :shop_location, style:"width:50%", placeholder:"例）東京都千代田区◯◯１丁目１ ▲▲ビル１階" %></td>
+        </tr>
+
+        <tr>
+          <th scope="row">店の緯度と経度を登録 *</th>
+          <td>
+            <p class="mb-0">
+              <strong>店の所在地を入力して検索ボタンを押すとマーカーがでますので、<br>
+              店の位置が正しく表示されているか確認してください。</strong><br>
+              ※もしくは、GoogleMapに登録されている名称であれば検索可能です。<br>
+              ※登録されている名称と異なっていると、検索できないか、間違った場所が表示される可能性がございます。
+            </p>
+            <input id="address" type="textbox" style="width:50%" placeholder="例）東京都千代田区◯◯１丁目１ ▲▲ビル１階" >
+            <input type="button" value="検索" onclick="codeAddress()">
+            <p class="mb-0 mt-3">マーカーをドラック＆ドロップで位置の調整ができます。<p>
+            <div class="actions">
+              <%= f.label :lat,"緯度" %>
+              <%= f.text_field :lat, id: :lat, placeholder:"自動入力されます" %>
+              <%= f.label :lng,"経度" %>
+              <%= f.text_field :lng, id: :lng, placeholder:"自動入力されます"%>
+            </div>
+            <div id='map' style="width: 90%; height: 500px;"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <th></th>
+          <td><%= f.submit "投稿する", class:"btn btn-secondary btn-lg" %></td>
+        </tr>
       </tbody>
     </table>
+    <% end %>
   </div>
 
-  <%= link_to "一覧に戻る", post_images_path, class:"btn btn-info mt-2" %>
+  <%= link_to "一覧に戻る", post_images_path, class:"btn btn-info mt-3" %>
 
 </div>
 

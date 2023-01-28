@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   }
 
 
-# ユーザー側のルーティング
+  # ユーザー側のルーティング
   scope module: :public do
     root to:"homes#top"
     resources :users, only: [:index, :show, :edit, :update, :destroy]
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     end
   end
 
-# 管理者側のルーティング
+  # 管理者側のルーティング
   namespace :admin do
     resources :post_images, only: [:index, :show, :destroy]
   end
