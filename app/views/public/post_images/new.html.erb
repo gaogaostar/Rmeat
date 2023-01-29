@@ -159,6 +159,6 @@ function codeAddress(){
 
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.map_api_key %>&callback=initMap" async defer></script>
 
 <%= javascript_pack_tag "star.js" %>
