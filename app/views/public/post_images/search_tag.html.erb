@@ -4,18 +4,20 @@
     <div>
       <p class="mb-0"><strong>タグで探す</strong></p>
       <% @tag_list.each do |tag_list| %>
-        <%= link_to tag_list.tag_name, search_tag_path(tag_id: tag_list.id) %>
-        <%= "(#{tag_list.post_images.count})" %>
+        <% if (tag_list.post_images.count) >= 1 %>
+          <%= link_to tag_list.tag_name, search_tag_path(tag_id: tag_list.id) %>
+          <%= "(#{tag_list.post_images.count})" %>
+          <% end %>
       <% end %>
     </div>
   </div>
 
     <!--メイン-->
-  <div class="row">
+  <div class="row row-cols-1 row-cols-md-4">
     <% @post_images.each do |post_image| %>
 
       <!--カードスタイル-->
-      <div class="card mx-auto mb-3" style="width:300px;">
+      <div class="card mb-3" style="width:300px;">
         <!--カード画像-->
         <div class="card-img-top" style="height:250px;">
           <%= link_to post_image_path(post_image.id) do %>

@@ -15,7 +15,7 @@ class Public::UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     flash[:notice] = "ユーザーを削除しました"
-    redirect_to :users_path
+    redirect_to users_path
   end
 
   private

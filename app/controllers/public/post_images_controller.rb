@@ -1,5 +1,5 @@
 class Public::PostImagesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show, :search_tag]
+  before_action :authenticate_user!, except: [:index, :show, :search_tag, :search_keyword]
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def new
