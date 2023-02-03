@@ -4,13 +4,14 @@ class Public::PostImagesController < ApplicationController
 
   def new
     @post_image = PostImage.new
+    @tag = Tag.where(id:1..15)
   end
 
   def create
     @post_image = PostImage.new(post_image_params)
     @post_image.user_id = current_user.id
-    params[:post_image][:tag] ? @post_image.tag = params[:post_image][:tag].join(",") : false
-    tag_list = params[:post_image][:tag_name].split(',')
+    # params[:post_image][:tag] ? @post_image.tag = params[:post_image][:tag].join(",") : false
+    # tag_list = params[:post_image][:tag_name].split(',')
 
     if @post_image.save
       @post_image.save_tag(tag_list)

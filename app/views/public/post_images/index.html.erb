@@ -37,9 +37,9 @@
             <div>投稿ユーザー：<%= post_image.user.name %></div>
             <div><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></div>
             <!--投稿一覧画面で投稿に紐づくタグを表示-->
-            <% unless post_image.tags.blank? %>
-              <div><i class="fa-solid fa-tag"></i><%= post_image.tags.map(&:tag_name).join(',') %></div>
-            <% end %>
+            <%# unless post_image.tags.blank? %>
+              <!--<div><i class="fa-solid fa-tag"></i><%#= post_image.tags.map(&:tag_name).join(',') %></div>-->
+            <%# end %>
 
             <!--管理者削除ボタン-->
             <% if current_user&.admin? %>
