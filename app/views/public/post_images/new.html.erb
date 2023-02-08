@@ -48,19 +48,20 @@
         </tr>
 
         <tr>
-          <th scope="row">タグ</th>
+          <th scope="row">
+            タグ</th>
           <td>
             <div class="form-group">
-              <%= f.collection_check_boxes(:tag_ids, @tag, :id, :tag_name) do |tag| %>
+              <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :tag_name) do |tag| %>
                 <div class="form-check">
                   <%= tag.label class:"form-check-label" do %>
                     <%= tag.check_box class:"form-check-input" %>
                     <%= tag.text %>
-                <% end %>
+                  <% end %>
                 </div>
               <% end %>
             </div>
-            <!--<p>","で区切ることで複数タグをつけることができます</p>-->
+            <p>","で区切ることで複数タグをつけることができます</p>
             <%#= f.text_field :tag_name, style:"width:50%", placeholder:"例）牛,馬" %>
           </td>
         </tr>

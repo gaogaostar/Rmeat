@@ -1,10 +1,10 @@
 class Public::PostImagesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show, :search_tag, :search_keyword]
+  before_action :authenticate_user! #, except: [:index, :show, :search_tag, :search_keyword]
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def new
     @post_image = PostImage.new
-    @tag = Tag.where(id:1..15)
+    # @tag = Tag.where(id:1..16)
   end
 
   def create
@@ -14,7 +14,7 @@ class Public::PostImagesController < ApplicationController
     # tag_list = params[:post_image][:tag_name].split(',')
 
     if @post_image.save
-      @post_image.save_tag(tag_list)
+      # @post_image.save_tag(tag_list)
       redirect_to post_image_path(@post_image), notice:"投稿しました"
     else
       render :new

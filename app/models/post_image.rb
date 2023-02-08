@@ -4,7 +4,7 @@ class PostImage < ApplicationRecord
   belongs_to :user
   has_many :post_comments, dependent: :destroy
   has_many :post_tags, dependent: :destroy
-  has_many :tags, through: :post_tags, dependent: :destroy
+  has_many :tags, through: :post_tags
 
   validates :image, presence: true
   validates :title, presence: true
