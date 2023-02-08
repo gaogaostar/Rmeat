@@ -20,7 +20,10 @@ Rails.application.routes.draw do
   # ユーザー側のルーティング
   scope module: :public do
     root to:"homes#top"
-    resources :users, only: [:index, :show, :edit, :update, :destroy]
+    get "users/my_page"=>"users#show", as:"my_page"
+    get "users/infomation/edit"=>"users#edit", as:"info_edit"
+    patch "users/infomation"=>"users#update", as:"info"
+    resources :users, only: [:index, :destroy]
     get "search_tag" => "post_images#search_tag"
     get "search_keyword" => "post_images#search_keyword"
     resources :maps, only: [:index]

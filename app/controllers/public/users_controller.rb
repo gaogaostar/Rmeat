@@ -6,10 +6,11 @@ class Public::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def edit
+    @user = current_user
   end
 
   def destroy
@@ -18,6 +19,7 @@ class Public::UsersController < ApplicationController
     flash[:notice] = "ユーザーを削除しました"
     redirect_to users_path
   end
+
 
   private
 
