@@ -77,7 +77,7 @@ class Public::PostImagesController < ApplicationController
     end
   end
 
-  # # before_action:管理者かどうか確認
+  #  before_action:管理者かどうか確認
   # def admin_user
   #   redirect_to root_path unless current_user.admin?
   # end

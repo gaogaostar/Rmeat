@@ -13,6 +13,16 @@ class Public::UsersController < ApplicationController
     @user = current_user
   end
 
+  def update
+    @user = current_user
+    if @user.update(user_params)
+      flash[:user_notice] = "会員情報を更新しました"
+      redirect_to my_page_path
+    else
+      render "edit"
+    end
+  end
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy
