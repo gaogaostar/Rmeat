@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }
   validates :email, presence: true, uniqueness: true
-  # validates :introduction, length: { maximum: 200 }
+  validates :introduction, length: { maximum: 200 }
 
   # プロフィール画像についてのメソッド
   def get_profile_image(width, height)
@@ -24,7 +24,7 @@ class User < ApplicationRecord
 
   # users/sessions_controller.rbで記述したUser.guestのguestメソッド
   def self.guest
-    find_or_create_by!(name:'guestuser', email:'guest@example.com') do |user|
+    find_or_create_by!(name:'ゲストユーザー', email:'guest@example.com') do |user|
       user.password = SecureRandom.urlsafe_base64
       user.name = "ゲストユーザー"
     end
