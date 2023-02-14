@@ -29,14 +29,14 @@
       <p class="d-flex">タグ：
         <% @post_tags.each do |post_tag| %>
           <%= link_to post_tag.tag_name, search_tag_path(tag_id: post_tag.id) %>
-          <%= "(#{post_tag.post_images.count})" %>
+          <%= "(#{post_tag.post_images.count})　" %>
         <% end %>
       </p>
-
-
-
-      <!--<p>投稿ユーザー画像：<%#= image_tag @post_image.user.get_profile_image(100,100) %></p>-->
-      <p class="mb-0">投稿ユーザー：<%= @post_image.user.name %></p>
+      <!--投稿ユーザー-->
+      <p class="mb-0">
+        <%= image_tag @post_image.user.get_profile_image(50,50), class:"rounded-circle" %>
+        <%= @post_image.user.name %>
+      </p>
       <p>投稿日：<%= @post_image.created_at.strftime('%Y/%m/%d') %></p>
 
 
@@ -45,29 +45,6 @@
         <%= link_to "投稿を削除する", post_image_path(@post_image.id), method: :delete, class:"btn btn-outline-danger mb-3", data: {confirm:"この投稿を削除してよろしいですか？"} %>
       <% end %>
 
-      <div>
-        <!--コメント投稿フォーム-->
-        <div>
-          <%= form_with model: [@post_image, @post_comment] do |f| %>
-            <%= f.text_area :comment, rows:"3", placeholder: "コメントを入力", style:"width:70%;" %><br>
-            <%= f.submit "コメントする" %>
-          <% end %>
-        </div>
-
-        <!--コメント件数-->
-        <p>コメント件数：<%= @post_image.post_comments.count %></p>
-        <!--投稿コメント一覧-->
-        <% @post_image.post_comments.each do |post_comment| %>
-          <%#= image_tag post_comment.user.get_profile_image(100,100) %>
-          <%= post_comment.created_at.strftime('%Y/%m/%d') %>
-          <%= post_comment.user.name %>：<%= post_comment.comment %><br>
-          <!--コメント削除ボタン-->
-          <% if post_comment.user == current_user %>
-            <%= link_to "削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete %><br>
-          <% end %>
-
-        <% end %>
-      </div>
     </div>
   </div>
 
@@ -92,6 +69,29 @@
     }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
+
+  <div class="mt-3">
+    <!--コメント投稿フォーム-->
+    <div>
+      <%= form_with model: [@post_image, @post_comment] do |f| %>
+        <%= f.text_area :comment, rows:"3", placeholder: "コメントを入力", style:"width:70%;" %><br>
+        <%= f.submit "コメントする" %>
+      <% end %>
+    </div>
+
+    <!--コメント件数-->
+    <p>コメント件数：<%= @post_image.post_comments.count %></p>
+    <!--投稿コメント一覧-->
+    <% @post_image.post_comments.each do |post_comment| %>
+      <%= image_tag post_comment.user.get_profile_image(40,40), class:"rounded-circle" %>
+      <%= post_comment.created_at.strftime('%Y/%m/%d') %>
+      <%= post_comment.user.name %>：<%= post_comment.comment %><br>
+      <!--コメント削除ボタン-->
+      <% if post_comment.user == current_user %>
+        <%= link_to "削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete %><br>
+      <% end %>
+    <% end %>
+  </div>
 
 </div>
 

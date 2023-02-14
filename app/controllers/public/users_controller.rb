@@ -17,7 +17,7 @@ class Public::UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update(user_params)
-      flash[:notice] = "会員情報を更新しました"
+      flash[:notice] = "ユーザー情報を更新しました"
       redirect_to my_page_path
     else
       render "edit"
@@ -36,6 +36,10 @@ class Public::UsersController < ApplicationController
 
   def admin_user
     redirect_to post_images_path unless current_user.admin?
+  end
+
+  def user_params
+    params.require(:user).permit(:name, :profile_image, :introduction)
   end
 
 end

@@ -1,16 +1,20 @@
-<div class="profile-container w-75 d-flex mx-auto justify-content-around align-items-center border-bottom py-5">
-  <div class="profile-name">
-    <%= image_tag @user.get_profile_image(100,100), class:"rounded-circle" %><br>
-    <%= @user.name %>
-  </div>
-
-
-  <% if @user.id == current_user.id %>
-    <div class="mt-auto">
-    <p><%= link_to "プロフィール編集", info_edit_path(@user), class:"btn btn-info" %></p>
+<!--プロフィール-->
+<div class="container">
+  <div class="row w-75 d-flex mx-auto justify-content-between align-items-center border-bottom py-5">
+    <div class="profile-name">
+      <%= image_tag @user.get_profile_image(100,100), class:"rounded-circle d-block mx-auto" %><br>
+      <%= @user.name %>
     </div>
-  <% end %>
+    <div>自己紹介：<%= @user.introduction %></div>
+    <!--プロフィール編集ボタン-->
+    <% if (@user.name != "ゲストユーザー") && (@user == current_user) %>
+      <div class="mt-auto">
+        <%= link_to "プロフィール編集", info_edit_path(@user), class:"btn btn-info" %>
+      </div>
+    <% end %>
+  </div>
 </div>
+
 
   <!--投稿一覧-->
   <div class="row row-cols-1 row-cols-md-4">

@@ -36,12 +36,8 @@
               <div class="star-rating-back" style="color:#ccc">★★★★★</div>
             </div>
             <div>店名：<%= post_image.shop_name %></div>
-            <div>投稿ユーザー：<%= post_image.user.name %></div>
-            <div><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></div>
-            <!--投稿一覧画面で投稿に紐づくタグを表示-->
-            <%# unless post_image.tags.blank? %>
-              <!--<div><i class="fa-solid fa-tag"></i><%#= post_image.tags.map(&:tag_name).join(',') %></div>-->
-            <%# end %>
+            <div><i class="fa-solid fa-user"></i><%= post_image.user.name %></div>
+            <div><i class="fa-regular fa-comment"></i>：<%= link_to "#{post_image.post_comments.count}", post_image_path(post_image.id) %></div>
 
             <!--管理者削除ボタン-->
             <% if current_user&.admin? %>
