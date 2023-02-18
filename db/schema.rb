@@ -78,7 +78,6 @@ ActiveRecord::Schema.define(version: 2023_01_22_115811) do
     t.integer "tag_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_image_id", "tag_id"], name: "index_post_tags_on_post_image_id_and_tag_id", unique: true
     t.index ["post_image_id"], name: "index_post_tags_on_post_image_id"
     t.index ["tag_id"], name: "index_post_tags_on_tag_id"
   end
@@ -96,7 +95,7 @@ ActiveRecord::Schema.define(version: 2023_01_22_115811) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "name", null: false
-    t.text "introduction", default: "よろしくお願いします。"
+    t.text "introduction"
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

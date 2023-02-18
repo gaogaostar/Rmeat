@@ -34,7 +34,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
 
       # カラムの追加
       t.string :name, null: false
-      t.text :introduction, default:"よろしくお願いします。"
+      t.text :introduction
       t.boolean :admin, null: false, default:"false"
       t.timestamps null: false
     end
