@@ -66,16 +66,6 @@
         <!--未ログイン時のヘッダー-->
         <% else %>
           <li>
-            <%= link_to post_images_path, class:"nav-link text-light" do %>
-              <i class="fa-solid fa-drumstick-bite"></i> お肉一覧
-            <% end %>
-          </li>
-          <li>
-            <%= link_to new_post_image_path, class:"nav-link text-light" do %>
-              <i class="fa-solid fa-drumstick-bite"></i> お肉を投稿する
-            <% end %>
-          </li>
-          <li>
             <%= link_to new_user_registration_path, class:"nav-link text-light" do %>
               <i class="fas fa-user-plus"></i> 新規ユーザー登録
             <% end %>
@@ -96,16 +86,18 @@
   <div class="sub-header" style="background:#752100;">
     <div class="container">
       <div class="text-light d-flex align-items-center py-2 px-5">
-        <!--キーワードで探す-->
-        <div>キーワードで探す：</div>
-        <%= form_with(url: search_keyword_path, local: true, method: :get, class: "search-form") do |form| %>
-          <%= form.text_field :keyword, placeholder: "投稿を検索する", class: "search-input" %>
-          <%= form.submit "検索", class: "search-btn" %>
-        <% end %>
-        <!--地図で探す-->
-        <div class="ml-5">
-        <%= link_to maps_path, class:"text-light" do %>
-          <i class="fa-solid fa-map-location-dot"></i> 地図で探す
+        <% if user_signed_in? %>
+          <!--キーワードで探す-->
+          <div>キーワードで探す：</div>
+          <%= form_with(url: search_keyword_path, local: true, method: :get, class: "search-form") do |form| %>
+            <%= form.text_field :keyword, placeholder: "投稿を検索する", class: "search-input" %>
+            <%= form.submit "検索", class: "search-btn" %>
+          <% end %>
+          <!--地図で探す-->
+          <div class="ml-5">
+          <%= link_to maps_path, class:"text-light" do %>
+            <i class="fa-solid fa-map-location-dot"></i> 地図で探す
+          <% end %>
         <% end %>
         </div>
       </div>

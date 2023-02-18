@@ -1,6 +1,10 @@
 <div class="containar">
   <div class="row w-75 mx-auto">
     <h2 class="col-12">プロフィール編集</h2>
+
+    <!--エラーメッセージ-->
+    <%= render 'layouts/errors', obj: @user %>
+
     <div class="col-12">
       <%= form_with model: @user do |f| %>
         <!--プロフィール画像-->

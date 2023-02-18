@@ -1,0 +1,11 @@
+<div class="row border border-dark rounded p-2 mb-4" style="background:#fbfaf5;">
+  <div>
+    <p class="mb-0"><strong>タグで探す</strong></p>
+    <% tag_lists.each do |tag_list| %>
+      <% if (tag_list.post_images.count) >= 1 %>
+        <%= link_to tag_list.tag_name, search_tag_path(tag_id: tag_list.id) %>
+        <%= "(#{tag_list.post_images.count})" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

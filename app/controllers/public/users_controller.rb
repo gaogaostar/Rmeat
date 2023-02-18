@@ -1,5 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :admin_user, only: [:index, :destroy]
+  before_action :ensure_guest_user, only: [:edit]
 
   def index
     @users = User.all
@@ -36,6 +37,13 @@ class Public::UsersController < ApplicationController
 
   def admin_user
     redirect_to post_images_path unless current_user.admin?
+  end
+
+  def ensure_guest_user
+    @user = current_user
+    if @user.name == "ゲストユーザー"
+      redirect_to my_page_path(current_user), notice:'ゲストユーザーはプロフィール編集画面へ遷移できません。'
+    end
   end
 
   def user_params

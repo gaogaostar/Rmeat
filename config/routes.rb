@@ -20,7 +20,6 @@ Rails.application.routes.draw do
     root to:"homes#top"
     get "users/my_page"=>"users#show", as:"my_page"
     get "users/infomation/edit"=>"users#edit", as:"info_edit"
-    # patch "users/infomation"=>"users#update", as:"info"
     resources :users, only: [:index, :update, :destroy]
     get "search_tag" => "post_images#search_tag"
     get "search_keyword" => "post_images#search_keyword"

@@ -1,20 +1,15 @@
 class Public::PostImagesController < ApplicationController
-  before_action :authenticate_user! #, except: [:index, :show, :search_tag, :search_keyword]
+  before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def new
     @post_image = PostImage.new
-    # @tag = Tag.where(id:1..16)
   end
 
   def create
     @post_image = PostImage.new(post_image_params)
     @post_image.user_id = current_user.id
-    # params[:post_image][:tag] ? @post_image.tag = params[:post_image][:tag].join(",") : false
-    # tag_list = params[:post_image][:tag_name].split(',')
-
     if @post_image.save
-      # @post_image.save_tag(tag_list)
       redirect_to post_image_path(@post_image), notice:"投稿しました"
     else
       render :new
@@ -23,7 +18,7 @@ class Public::PostImagesController < ApplicationController
 
   def index
     @post_images = PostImage.all.order(id: "DESC")
-    @tag_list = Tag.all
+    @tag_lists = Tag.all
   end
 
   def show
@@ -45,12 +40,11 @@ class Public::PostImagesController < ApplicationController
   end
 
   def search_tag
-    #検索結果画面でもタグ一覧表示
-    @tag_list = Tag.all
+    @tag_lists = Tag.all
     #検索されたタグを受け取る
     @tag = Tag.find(params[:tag_id])
     #検索されたタグに紐づく投稿を表示
-    @post_images = @tag.post_images.all  # .page(params[:page]).per(10)
+    @post_images = @tag.post_images.all
   end
 
   def search_keyword
@@ -63,7 +57,7 @@ class Public::PostImagesController < ApplicationController
       # 部分一致で検索
       @post_images = PostImage.where(["title LIKE(?) OR body LIKE(?) OR shop_name LIKE(?) OR shop_location LIKE(?)", "%#{params[:keyword]}%", "%#{params[:keyword]}%", "%#{params[:keyword]}%", "%#{params[:keyword]}%"])
     end
-    @tag_list = Tag.all
+    @tag_lists = Tag.all
   end
 
 
@@ -76,11 +70,6 @@ class Public::PostImagesController < ApplicationController
       redirect_to post_images_path
     end
   end
-
-  #  before_action:管理者かどうか確認
-  # def admin_user
-  #   redirect_to root_path unless current_user.admin?
-  # end
 
   def post_image_params
     params.require(:post_image).permit(:image, :shop_name, :shop_location, :lat, :lng, :star, :title, :body, :keyword, tag_ids:[])
