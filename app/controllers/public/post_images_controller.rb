@@ -1,6 +1,8 @@
 class Public::PostImagesController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
+  before_action :ensure_guest_user, only: [:new, :create, :edit, :update]
+
 
   def new
     @post_image = PostImage.new
@@ -68,6 +70,13 @@ class Public::PostImagesController < ApplicationController
     @post_image = PostImage.find(params[:id])
     unless (@post_image.user == current_user) || current_user&.admin?
       redirect_to post_images_path
+    end
+  end
+
+  def ensure_guest_user
+    @user = current_user
+    if @user.name == "ゲストユーザー"
+      redirect_to post_images_path, notice:'ゲストユーザーは閲覧のみ可能です。'
     end
   end
 
