@@ -13,6 +13,8 @@ module Rmeat
 
     # deviseのフラッシュメッセージ日本語化
     config.i18n.default_locale = :ja
+    # 日本時間に設定
+    config.time_zone = 'Tokyo'
 
     # Configuration for the application, engines, and railties goes here.
     #
